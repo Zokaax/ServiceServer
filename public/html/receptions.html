@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="/media/img/nanologo.png">
+		<link rel="stylesheet" href="../css/style.css">
+
+		<title>Recepciones Servicio Tecnico</title>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/"><img src="/media/img/nanologo.png" width=100></a>
+				<span>Search</span>
+				<input type="text">
+				<span id='currentDate'></span>
+			</nav>
+
+		</header>
+
+		<aside>
+			<ul>
+				<li><a href="/">HOME</a></li>
+				<li><a href="/recepciones">RECEPCIONES</a></li>
+				<li><a href="reportes">REPORTES</a></li>
+				<li><a href="/incidencias">INCICIDENCIAS</a></li>
+				<li><a href="/configuracion">CONFIG</a></li>
+			</ul>
+		</aside>
+
+		<section>
+
+			<hr>
+
+			<div id="addClientSection">
+				<p>Clientes</p>
+			    <form id="addClientForm" method="post">
+
+			        <label for="clientName">Nombre:</label>
+			        <input type="text" id="clientName" name="name"><br><br>
+
+			        <label for="clientPhone">Telefono:</label>
+			        <input type="text" id="clientPhone" name="phone"><br><br>
+
+			        <button type="button" id="submitAddClient">Enviar</button>
+			        <button type="reset">Limpiar</button>
+			    </form>
+			</div>
+
+			<hr>
+
+			<div id="addDeviceSection">
+				<p>Dispositivos</p>
+				<form id="addDeviceForm" method="post">
+
+			        <label for="deviceBrand">Marca:</label>
+			        <input type="text" id="deviceBrand" name="brand"><br><br>
+
+			        <label for="deviceModel">Modelo:</label>
+			        <input type="text" id="deviceModel" name="model"><br><br>
+
+			        <label for="deciveType">Tipo:</label>
+			        <input type="text" id="deciveType" name="type"><br><br>
+
+			        <button type="button" id="submitAddDevice">Enviar</button>
+			        <button type="reset">Limpiar</button>
+			    </form>
+			</div>
+
+			<hr>
+
+			<div id="addReceptionSection">
+				<p>Recepciones</p>
+				<form id="addReceptionForm" method="post">
+
+			        <label for="saintOrderText">Pedido:</label>
+			        <input type="text" id="saintOrderText" name="saintOrder"><br><br>
+
+			        <label for="receptionDateStart">Fecha de inicio</label>
+			        <input type="date" id="receptionDateStart" name="dateStart"><br><br>
+
+			        <label for="clientList">Cliente:</label>
+			        <select id="clientList" name="clientId">
+			        	<option value="">-- Selecciona un Cliente --</option>
+			        </select><br><br>
+
+			        <label for="deviceList">Dispositivo:</label>
+			        <select id="deviceList" name="deviceId">
+			        	<option value="">-- Selecciona un Dispositivo --</option>
+			        </select><br><br>
+
+			        <label for="clientIssueArea">Planteamiento del Cliente:</label>
+			        <textarea id="clientIssueArea" name="clientIssue" rows='5'></textarea><br><br>
+
+			        <label for="workDoneArea">Trabajo Realizado:</label>
+			        <textarea id="workDoneArea" name="workDone" rows='5'></textarea><br><br>
+
+			        <select id="statusList" name="status">
+			        	<option value="">-- Selecciona un Estado --</option>
+			        	<option value="EN PROCESO"> -- En Proceso --</option>
+			        	<option value="PENDIENTE"> -- Pendiente --</option>
+			        	<option value="COBRADO"> -- Cobrado --</option>
+			        	<option value="PAGADO"> -- Pagado --</option>
+			        	<option value="GARANTIA"> -- Garantia --</option>
+			        	<option value="CRUCE"> -- Cruce --</option>
+			        	<option value="ELIMINADA"> -- Eliminada --</option>
+			        	<option value="OTRO"> -- Otro --</option>
+			        </select><br><br>
+
+			        <button type="button" id="submitAddReception">Enviar</button>
+			        <button type="reset">Limpiar</button>
+			    </form>
+
+			</div>
+
+			<hr>
+
+			<label for="receptionsView">Lista de Recepciones</label>
+			<ul id="receptionsView"></ul>
+
+			<hr>
+
+			<div id="addPaymentSection">
+				<p>Pagos</p>
+				<form id="addPaymentForm" method="post">
+
+			        <label for="methodList">Metodo:</label>
+					<select id="methodList" name="method">
+			        	<option value="">-- Selecciona un Estado --</option>
+			        	<option value="BANCAMIGA"> -- BANCAMIGA --</option>
+			        	<option value="BINANCE"> -- BINANCE --</option>
+			        	<option value="DIVISAS"> -- DIVISAS --</option>
+			        	<option value="BOLIVARES EFECTIVO"> -- BOLIVARES EFECTIVO --</option>
+			        	<option value="CRUCE"> -- CRUCE --</option>
+			        	<option value="OTRO"> -- OTRO --</option>
+			        </select><br><br>
+
+			        <label for="referenceArea">Referencia:</label>
+			        <input type="text" id="referenceArea" name="reference"><br><br>
+
+			        <label for="amoutDolarsArea">Dolares:</label>
+			        <input type="text" id="amoutDolarsArea" name="amoutDolar"><br><br>
+
+			        <label for="amoutBolivaresArea">Bolivares:</label>
+			        <input type="text" id="amoutBolivaresArea" name="amoutBolivar"><br><br>
+
+			        <label for="saintInvoiceArea">Factura:</label>
+			        <input type="text" id="saintInvoiceArea" name="saintInvoice"><br><br>
+
+			        <label for="receptionsList">Recepciones:</label>
+			        <select id="receptionsList" name="receptionId">
+			        	<option value="">-- Selecciona una Recepcion --</option>
+			        </select><br><br>
+
+			        <button type="button" id="submitAddPayment">Enviar</button>
+			        <button type="reset">Limpiar</button>
+
+
+			    </form>
+			</div>
+
+
+
+		</section>
+
+		<footer>
+			<p>Nanologic Service Technical Program 2025. All rights reserved.</p>
+		</footer>
+
+		<!-- <script src="/javascript/identify.js"></script> -->
+		<script src="/javascript/utils.js"></script>
+		<script src="/javascript/recepcionesForm.js"></script>
+
+	</body>
+</html>
