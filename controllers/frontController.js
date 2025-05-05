@@ -1,9 +1,12 @@
-const path = require('path');
+import path from 'path'
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-class FrontController {
+export default class FrontController {
 
     static async getIndex(req, res) {
         try {
+            
             const filePath = path.join(__dirname, '..', 'public', 'html', 'index.html');
             res.sendFile(filePath);
 
@@ -39,5 +42,3 @@ class FrontController {
         }
     }
 }
-
-module.exports = FrontController;

@@ -1,11 +1,11 @@
-const knex = require('../config/databaseCon');
+import { database } from '../config/databaseCon.js';
 // modelo base para utilizar base de datos knex
 
-const BaseModel = (tableName) => {
+export const BaseModel = (tableName) => {
 
     return class {
         
-        static db = knex;
+        static db = database;
         static tableName = tableName;
 
         static async getAll() {
@@ -34,5 +34,3 @@ const BaseModel = (tableName) => {
         }
     }
 }
-
-module.exports = BaseModel;

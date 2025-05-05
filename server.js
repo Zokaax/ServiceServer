@@ -1,50 +1,64 @@
-    
-    const express = require('express');
-    const app = express();
-    const config = require('./index.ts')
-    const path = require('path');
-    const {addClient, removeClient} = require('./config/serverManager.mjs')
-    
-    // const logger = require('./middleware/logging/logger');
-    // const errorHandler = require('./middleware/errors/errorHandler');
-    
-    const port = config.server.port;
-    const environment = config.server.environment;
-    
-    // app.use(logger);
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
-    
-    //ruta estatica
-    app.use(express.static(path.join(__dirname, 'public')));
-    
-    
-    app.get('/events', (req, res) => {
-        addClient(res);
+import express, { json } from 'express';
+// import config from './index.ts';
 
-        // Manejar la desconexión del cliente
-        req.on('close', () => {
-            removeClient(res);
-        });
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// const { addClient, removeClient } = require('./config/serverManager.js');
+import { addClient, removeClient } from './config/serverManager.js'
+
+//routes
+import { frontRouter } from './routes/front.js';
+import { clientsRouter } from './routes/clients.js';
+import { devicesRouter } from './routes/devices.js';
+import { receptionsRouter } from './routes/receptions.js';
+import { paymentsRouter } from './routes/payments.js';
+import { errorHandler } from './middleware/errors/errorHandler.js'
+
+const app = express();
+
+// const logger = require('./middleware/logging/logger');
+// const errorHandler = require('./middleware/errors/errorHandler');
+
+const port = process.env.port ?? 3000;
+// const environment = process.env.environment ?? 'development';
+
+// app.use(logger);
+app.use(json());
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.urlencoded({ extended: true }));
+
+// ruta estática
+app.use(express.static(join(__dirname, 'public')));
+
+app.get('/events', (req, res) => {
+    addClient(res);
+
+    // Manejar la desconexión del cliente
+    req.on('close', () => {
+        removeClient(res);
     });
+});
 
-    const frontRouter = require('./routes/frontRoutes.js');
-    const dataRouter = require('./routes/dataRoutes.js');
-    // const reportsRouter = require('./routes/reportRoutes');
-    // const equiposRouter = require('./routes/equiposRouter');
-    // const propietarioRouter = require('./routes/propietarioRouter');
 
-    // Rutas API
-    app.use('/api/', dataRouter);
-    // app.use('/api/reports', reportsRouter);
+// const reportsRouter = require('./routes/reportRoutes');
+// const equiposRouter = require('./routes/equiposRouter');
+// const propietarioRouter = require('./routes/propietarioRouter');
 
-    // Front
-    app.use('/', frontRouter);
+// Rutas API
+app.use('/api/clients', clientsRouter);
+app.use('/api/devices', devicesRouter);
+app.use('/api/receptions', receptionsRouter);
+app.use('/api/payments', paymentsRouter);
 
-    // errores
-    // app.use(errorHandler);
+// Front
+app.use('/', frontRouter);
 
-    app.listen(port, () => {
-        console.log("Servidor escuchando en http://localhost: " + port);
-        console.log(`Entorno: ${environment}`);
-    });
+// errores
+app.use(errorHandler);
+
+app.listen(port, () => {
+        console.log("Servidor escuchando en http://localhost:" + port);
+        // console.log(`Entorno: ${environment}`);
+});

@@ -1,15 +1,11 @@
-const { serverSend }  = require('../config/serverManager.mjs');
-
-const BaseController = require('./baseController')
-const BaseModel = require('../model/baseModel');
-const path = require('path');
+import { serverSend } from '../config/serverManager.js';
+import { BaseController } from './baseController.js'
+import { BaseModel } from '../model/baseModel.js'
 
 const Client = BaseModel('clients');
 
-class ClientController extends BaseController(Client){
-
+export default class ClientController extends BaseController(Client){
     static async addData(req, res, next) {
-        
         try {
             super.addData(req, res, next)
             try {
@@ -26,5 +22,3 @@ class ClientController extends BaseController(Client){
         }
     }
 }
-
-module.exports = ClientController;

@@ -1,6 +1,6 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = {
+export const config = {
     server: {
         port: process.env.PORT || 3000,
         environment: process.env.NODE_ENV || 'development'

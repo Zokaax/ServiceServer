@@ -1,4 +1,4 @@
-const errorHandler = (err, req, res, next) => {
+export function errorHandler(err, req, res, next){
     console.error(err.stack);
     
     // Respuesta consistente para todos los errores
@@ -8,5 +8,3 @@ const errorHandler = (err, req, res, next) => {
         error: process.env.NODE_ENV === 'development' ? err.stack : undefined
     });
 };
-
-module.exports = errorHandler;

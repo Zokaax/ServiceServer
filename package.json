@@ -6,14 +6,18 @@
   "devDependencies": {
     "@types/bun": "latest"
   },
+  "scripts": {
+    "dev": "node --watch server.js"
+  },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "5"
   },
   "dependencies": {
     "body-parser": "2.2.0",
     "date-fns": "4.1.0",
     "express": "5.1.0",
     "knex": "3.1.0",
-    "sqlite3": "5.1.7"
+    "sqlite3": "5.1.7",
+    "zod": "^3.24.4"
   }
 }

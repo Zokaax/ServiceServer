@@ -1,7 +1,35 @@
-
-const BaseController = (Model) => {
+export const BaseController = (Model) => {
     return class {
         static async getAll(req, res, next) {
+            const { ids } = req.query
+
+
+            //verificar si hay varios ids
+            if (ids){
+
+                try {
+    
+                    const idsArray = ids.split(',').map(id => parseInt(id, 10)).filter(id => !isNaN(id));
+    
+                    if (idsArray.length === 0) {
+                        next({
+                            status: 400,
+                            message: 'La lista de IDs proporcionada no es válida.'
+                        });
+                        return;
+                    }
+                    
+                    const elements = await Model.db(Model.tableName).whereIn('id', idsArray).select('*');
+                    return res.json(elements);
+                } catch (error) {
+                    next({
+                        status: 500,
+                        message: `Error al obtener ${Model.tableName} por IDs`,
+                        error
+                    });
+                    return;
+                }
+            }
             try {
                 const elements = await Model.getAll();
                 res.json({
@@ -133,5 +161,3 @@ const BaseController = (Model) => {
         }
     }
 }
-
-module.exports = BaseController;

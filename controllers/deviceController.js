@@ -1,12 +1,10 @@
-const { serverSend }  = require('../config/serverManager.mjs');
-
-const BaseController = require('./baseController')
-const BaseModel = require('../model/baseModel')
-const path = require('path')
+import { serverSend } from '../config/serverManager.js';
+import { BaseController } from './baseController.js'
+import { BaseModel } from '../model/baseModel.js'
 
 const Device = BaseModel('devices')
 
-class DeviceController extends BaseController(Device) {
+export default class DeviceController extends BaseController(Device) {
     static async addData(req, res, next) {
         try {
             super.addData(req, res, next)
@@ -24,5 +22,3 @@ class DeviceController extends BaseController(Device) {
         }
     }
 }
-
-module.exports = DeviceController

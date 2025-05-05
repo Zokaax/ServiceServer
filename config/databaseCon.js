@@ -1,4 +1,6 @@
-const knex = require('knex')({
+import knex from 'knex'
+
+export const database = knex({
     client: 'sqlite3',
     connection: {
         filename: './mydb.sqlite',
@@ -7,9 +9,9 @@ const knex = require('knex')({
 
 // Crear la tabla cliente
 async function createClientTable() {
-    const exists = await knex.schema.hasTable('clients');
+    const exists = await database.schema.hasTable('clients');
     if (!exists) {
-        await knex.schema.createTable('clients', (table) => {
+        await database.schema.createTable('clients', (table) => {
             table.increments('id').primary();
             table.string('name').notNullable();
             table.string('phone');
@@ -22,9 +24,9 @@ async function createClientTable() {
 
 // Crear la tabla dispositivos
 async function createDeviceTable() {
-    const exists = await knex.schema.hasTable('devices');
+    const exists = await database.schema.hasTable('devices');
     if (!exists) {
-        await knex.schema.createTable('devices', (table) => {
+        await database.schema.createTable('devices', (table) => {
             table.increments('id').primary();
             table.string('brand').notNullable();
             table.string('type');
@@ -38,9 +40,9 @@ async function createDeviceTable() {
 
 // Crear la tabla medios de pago
 async function createPaymentTable() {
-    const exists = await knex.schema.hasTable('payments');
+    const exists = await database.schema.hasTable('payments');
     if (!exists) {
-        await knex.schema.createTable('payments', (table) => {
+        await database.schema.createTable('payments', (table) => {
             table.increments('id').primary();
             table.string('method');
             table.string('reference');
@@ -63,9 +65,9 @@ async function createPaymentTable() {
 
 // Crear la tabla recepcion
 async function createReceptionTable() {
-    const exists = await knex.schema.hasTable('receptions');
+    const exists = await database.schema.hasTable('receptions');
     if (!exists) {
-        await knex.schema.createTable('receptions', (table) => {
+        await database.schema.createTable('receptions', (table) => {
             table.increments('id').primary();
             table.string('saintOrder');
 
@@ -104,5 +106,3 @@ async function createInitialTables() {
 }
 
 createInitialTables();
-
-module.exports = knex;
