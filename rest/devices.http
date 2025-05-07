@@ -1,0 +1,2 @@
+### recuperar informacion de los reportes
+GET http://localhost:3000/api/devices

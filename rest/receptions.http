@@ -1,0 +1,5 @@
+### recuperar informacion de los recepciones
+GET http://localhost:3000/api/receptions
+
+### recuperar informacion de varias recepciones
+GET http://localhost:3000/api/receptions?ids=5,2,7,1

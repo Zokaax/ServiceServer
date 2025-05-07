@@ -1,6 +1,6 @@
 import { serverSend } from '../config/serverManager.js';
-import { BaseController } from './baseController.js'
-import { BaseModel } from '../model/baseModel.js'
+import { BaseController } from './base.js'
+import { BaseModel } from '../model/base.js'
 
 const Payment = BaseModel('payments')
 

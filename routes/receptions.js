@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import receptionController from '../controllers/receptionController.js'
+import receptionController from '../controllers/reception.js'
 
 export const receptionsRouter = Router();
     

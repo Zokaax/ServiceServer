@@ -1,7 +1,7 @@
 import zod from 'zod'
 
 const receptionSchema = zod.object({
-  saintOrder : zod.string(),
+  saintOrder: zod.string(),
   dateStart: zod.string().date(),
   dateEnd: zod.string().date(),
   clientId: zod.number().positive({

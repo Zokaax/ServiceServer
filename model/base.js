@@ -25,12 +25,22 @@ export const BaseModel = (tableName) => {
             return this.db(tableName).insert(data);
         }
 
-        static async update(id, data) {
+        static async update({ id, data }) {
             return this.db(tableName).where('id', id).update(data);
         }
 
         static async delete(id) {
             return this.db(tableName).where('id', id).del();
+        }
+
+        static async exists(id) {
+            const result = await this.db(this.tableName)
+                .where('id', id)
+                .count('* as count') 
+                .first(); 
+        
+            const count = result ? result.count : 0;
+            return count > 0;
         }
     }
 }

@@ -1,7 +1,7 @@
 import zod from 'zod'
 
 const paymentSchema = zod.object({
-  method : zod.string({
+  method: zod.string({
     invalid_type_error: 'El pago debe registrarse bajo algun metodo.',
     required_error: 'El metodo de pago es requerido.'
   }),

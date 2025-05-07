@@ -1,5 +1,5 @@
 import { Router} from 'express';
-import FrontController from '../controllers/frontController.js';
+import FrontController from '../controllers/front.js';
 
 export const frontRouter = Router();
 
