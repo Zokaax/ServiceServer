@@ -1,5 +1,3 @@
-import { AppError, NotFoundError, DatabaseError } from '../middleware/errors/serviceError.js';
-
 export const BaseService = (Model) => {
     return class {
         constructor() {
@@ -7,17 +5,8 @@ export const BaseService = (Model) => {
         }
 
         async safeCall(modelMethodName, ...args) {
-            try {
-                const result = await this.Model[modelMethodName](...args);
-                return result; 
-            } catch (error) {
-                console.error(`[Service Error] Error en Model.${modelMethodName}(${JSON.stringify(args)}):`, error); // Loguear el error original
-
-                if (error instanceof AppError) {
-                    throw error;
-                }
-                throw new DatabaseError(`Fallo en operación de base de datos: ${modelMethodName}`, error); // Envuelve el error original
-            }
+            const result = await this.Model[modelMethodName](...args);
+            return result; 
         }
 
         async getAll() {
@@ -25,33 +14,34 @@ export const BaseService = (Model) => {
             return items; 
         }
 
-        async create(data) {
-
-            const createdResult = await this.safeCall('create', data);
-
-            const createdId = Array.isArray(createdResult) ? createdResult[0] : createdResult;
-
-            return {"id":createdId.toString(), ...data}; 
+        async getById(id) {
+            const items = await this.safeCall('getById', id); 
+            return items; 
         }
 
-        async update({ id, data }) {
+        async getByIds(idsArray) {
+            const items = await this.safeCall('getByIds', idsArray); 
+            return items; 
+        }
+
+        async getField(field, value) {
+            const items = await this.safeCall('getByField', field, value); 
+            return items; 
+        }
+
+        async create(data) { //retorna el id creado
+            const idCreated = await this.safeCall('create', data);
+            return idCreated;
+        }
+
+        async update({ id, data }) { //retorna la cantidad de filas afectadas
             const rowsAffected = await this.safeCall('update', { id, data });
-
-            if (!(rowsAffected === 0)) {
-                return {id, ...data};
-            }
-            return null;
+            return rowsAffected;
         }
 
-        async delete(id) {
-
+        async delete(id) { //retorna la cantidad de filas afectadas
             const rowsAffected = await this.safeCall('delete', id);
-
-            if (rowsAffected === 0) {
-                 throw new NotFoundError(`El cliente con ID ${id} no encontrado para eliminar.`);
-            }
-
-            return { success: true, data:{}};
+            return rowsAffected;
         }
 
         async exists(id) {

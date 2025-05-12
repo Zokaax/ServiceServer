@@ -1,11 +1,14 @@
-import { Router } from 'express'
-import clientController from '../controllers/client2.js'
+import { Router } from 'express';
+import clientController from '../controllers/client.js';
+import { validateRequest, validateQuery, validateId} from '../middleware/validation/validateRequest.js';
 
 export const clientsRouter = Router();
 
-clientsRouter.get('/:id', clientController.getDataById);
-clientsRouter.get('/', clientController.getAll);
-clientsRouter.post('/', clientController.addData);
-clientsRouter.put('/:id', clientController.createOrUpdate);
-clientsRouter.patch('/:id', clientController.updateData);
-clientsRouter.delete('/:id', clientController.deleteData);
+clientsRouter.get('/:id', validateId, validateRequest('client'), clientController.getDataById);
+clientsRouter.delete('/:id', validateId, validateRequest('client'), clientController.deleteData);
+
+clientsRouter.put('/:id', validateId, validateRequest('client'), clientController.createOrUpdate);
+clientsRouter.patch('/:id', validateId, validateRequest('client'), clientController.updateData);
+
+clientsRouter.post('/', validateRequest('client'), clientController.addData);
+clientsRouter.get('/', validateQuery, clientController.getAll);

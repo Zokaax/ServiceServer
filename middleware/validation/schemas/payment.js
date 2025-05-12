@@ -7,7 +7,7 @@ const paymentSchema = zod.object({
   }),
   reference: zod.number(),
   amoutBolivar: zod.number().positive(),
-  amoutDolars: zod.number().positive(),
+  amoutDolar: zod.number().positive(),
   saintInvoice: zod.number(),
   receptionId: zod.number().positive()
 })

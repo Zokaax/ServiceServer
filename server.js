@@ -32,14 +32,14 @@ app.use(express.urlencoded({ extended: true }));
 // ruta estática
 app.use(express.static(join(__dirname, 'public')));
 
-app.get('/events', (req, res) => {
-    addClient(res);
+// app.get('/events', (req, res) => {
+//     addClient(res);
 
-    // Manejar la desconexión del cliente
-    req.on('close', () => {
-        removeClient(res);
-    });
-});
+//     // Manejar la desconexión del cliente
+//     req.on('close', () => {
+//         removeClient(res);
+//     });
+// });
 
 
 // const reportsRouter = require('./routes/reportRoutes');

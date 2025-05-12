@@ -21,6 +21,11 @@ export const BaseModel = (tableName) => {
             return elements
         }
 
+        static async getByField(fieldName, value) {
+            const elements = await this.db(this.tableName).where(fieldName, value).select('*');
+            return elements
+        }
+        
         static async create(data) {
             return this.db(tableName).insert(data);
         }

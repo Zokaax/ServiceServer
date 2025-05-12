@@ -1,2 +1,41 @@
-### recuperar informacion de los reportes
+## API
+### recuperar informacion de los dispositivos
 GET http://localhost:3000/api/devices
+
+### recuperar informacion de un dispositivo
+GET http://localhost:3000/api/devices/2
+
+### recuperar informacion de varios dispositivos
+GET http://localhost:3000/api/devices?ids=1,2,3,15,5
+
+### CORREGIR FILTROS ZOD
+### enviando informacion para agregar un dispositivo
+POST http://localhost:3000/api/devices
+Content-Type: application/json
+
+{
+    "brand": "123231",
+    "type": "123132",
+    "model": "123"
+}
+
+### enviando informacion para actualizar o agregar un dispositivo
+PUT http://localhost:3000/api/devices/2444
+Content-Type: application/json
+
+{
+    "type": "iPhone 121 Pro",
+    "model": "ABC123XYZ",
+    "brand": "123231"
+}
+
+### enviando informacion para actualizar parte de un dispositivo
+PATCH http://localhost:3000/api/devices/13
+Content-Type: application/json
+
+{
+    "type": "123"
+}
+
+### eliminar informacion de un dispositivo
+DELETE http://localhost:3000/api/devices/12

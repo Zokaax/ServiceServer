@@ -14,10 +14,10 @@ const receptionSchema = zod.object({
   status: zod.string()
 })
 
-export function validateDevice (input) {
+export function validateReception (input) {
   return receptionSchema.safeParse(input)
 }
 
-export function validatePartialDevice (input) {
+export function validatePartialReception (input) {
   return receptionSchema.partial().safeParse(input)
 }

@@ -28,8 +28,8 @@ async function createDeviceTable() {
     if (!exists) {
         await database.schema.createTable('devices', (table) => {
             table.increments('id').primary();
-            table.string('brand').notNullable();
-            table.string('type');
+            table.string('brand');
+            table.string('type').notNullable();
             table.string('model');
         });
         console.log("Table 'device' added");
