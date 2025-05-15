@@ -8,9 +8,9 @@ class DeviceService extends BaseService(Device) {
         super();
     }
 
-    async getDevices(idsArray = null) {
-        const devicesRequest = idsArray
-        ? await super.getByIds(idsArray)
+    async getDevices(query = null) {
+        const devicesRequest = query
+        ? await super.getQuery(query)
         : await super.getAll(); 
         return devicesRequest;
     }
@@ -32,7 +32,7 @@ class DeviceService extends BaseService(Device) {
      }
 
      async deleteDevice(id) {
-        const device = await super.getById(id);
+        const device = await this.getDeviceById(id);
         await super.delete(id);
         return {id, ...device} 
      }

@@ -9,23 +9,36 @@ export const BaseModel = (tableName) => {
         static tableName = tableName;
 
         static async getAll() {
-            return this.db(tableName).select('*');
+            return await this.db(tableName).select('*');
         }
 
         static async getById(id) {
             return this.db(tableName).where('id', id).first();
         }
 
-        static async getByIds(array) {
-            const elements = await this.db(tableName).whereIn('id', array).select('*');
-            return elements
+        static async getByQuery(querys) {
+            let queryBuilder = this.db(this.tableName).select('*');
+
+            for (const fieldName in querys) {
+                if (Object.hasOwnProperty.call(querys, fieldName)) {
+                    let value = querys[fieldName];
+
+                    if (typeof value === 'string' && value.includes(',')) {
+                        const values = value.split(',');
+                        const trimmedValues = values.map(v => v.trim());
+                        queryBuilder = queryBuilder.whereIn(fieldName, trimmedValues);
+                    } else {
+                        // value = `%${value}%`
+                        // queryBuilder = queryBuilder.where(fieldName, 'like', value);
+                        queryBuilder = queryBuilder.where(fieldName, value);
+                    }
+                }
+            }
+
+            const elements = await queryBuilder;
+            return elements;
         }
 
-        static async getByField(fieldName, value) {
-            const elements = await this.db(this.tableName).where(fieldName, value).select('*');
-            return elements
-        }
-        
         static async create(data) {
             return this.db(tableName).insert(data);
         }

@@ -8,7 +8,7 @@ export const errorHandler = (err, req, res, next) => {
 
     const message = err.message || (statusCode === 500 ? 'Ocurrió un error interno en el servidor.' : 'Hubo un problema con la solicitud.');
 
-    const errorDetails = (statusCode === 500 && process.env.NODE_ENV !== 'production') ? err : undefined; // Muestra stack/detalles solo en desarrollo para 500
+    // const errorDetails = (statusCode === 500 && process.env.NODE_ENV !== 'production') ? err : undefined; // Muestra stack/detalles solo en desarrollo para 500
 
     if (res.headersSent) {
         console.warn('Headers already sent. Cannot send error response. Passing to next error handler or ending.');
@@ -19,7 +19,7 @@ export const errorHandler = (err, req, res, next) => {
     res.status(statusCode).json({
         success: false,
         errorCode: statusCode,
-        message: message,
-        error: errorDetails 
+        message: message
+        // error: errorDetails 
     });
 };

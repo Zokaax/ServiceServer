@@ -2,20 +2,14 @@
 ### recuperar informacion de las recepciones
 GET http://localhost:3000/api/receptions
 
-### recuperar informacion de una recepcion
-GET http://localhost:3000/api/receptions/12
-
 ### recuperar informacion de varias recepciones
-GET http://localhost:3000/api/receptions?ids=1,7,6,3,2,7,8
+GET http://localhost:3000/api/receptions?id=1,7,6,3,2,7,8
 
 ### recuperar toda la informacion de las recepciones y sus dependencias
 GET http://localhost:3000/api/receptions/full
 
-### recuperar toda la informacion de una recepciones y sus dependencias
-GET http://localhost:3000/api/receptions/full/4
-
 ### recuperar toda la informacion de varias recepciones y sus dependencias
-GET http://localhost:3000/api/receptions/full?ids=1,7,6,3222,2,7,8
+GET http://localhost:3000/api/receptions/full?saintOrder=123
 
 ### enviando informacion para agregar una recepcion
 POST http://localhost:3000/api/receptions
@@ -25,35 +19,35 @@ Content-Type: application/json
     "saintOrder":"123123",
     "dateStart":"2023-10-27",
     "dateEnd":"2023-10-27",
-    "clientId":1,
-    "deviceId":2,
+    "clientId":12,
+    "deviceId":5,
     "clientIssue":"el señor de la fabrica",
     "workDone":"el señor de la fabrica",
     "status": "0412-98512563"
 }
 
 ### enviando informacion para actualizar o agregar una recepcion
-PUT http://localhost:3000/api/receptions/23
+PUT http://localhost:3000/api/receptions/2
 Content-Type: application/json
 
 {
     "saintOrder":"123123",
     "dateStart":"2023-11-27",
     "dateEnd":"2024-10-27",
-    "clientId":1,
-    "deviceId":2,
+    "clientId":15,
+    "deviceId":5,
     "clientIssue":"el señor de la fabrica",
     "workDone":"el señor de la fabrica",
     "status": "0412-98512563"
 }
 
 ### enviando informacion para actualizar parte de una recepcion
-PATCH http://localhost:3000/api/receptions/4
+PATCH http://localhost:3000/api/receptions/6
 Content-Type: application/json
 
 {
-    "workDone":"el señor de la fabrica"
+    "clientId":12
 }
 
 ### eliminar informacion de una recepcion
-DELETE http://localhost:3000/api/receptions/2
+DELETE http://localhost:3000/api/receptions/1

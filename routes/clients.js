@@ -4,11 +4,10 @@ import { validateRequest, validateQuery, validateId} from '../middleware/validat
 
 export const clientsRouter = Router();
 
-clientsRouter.get('/:id', validateId, validateRequest('client'), clientController.getDataById);
-clientsRouter.delete('/:id', validateId, validateRequest('client'), clientController.deleteData);
+clientsRouter.delete('/:id', validateId, clientController.deleteData);
 
 clientsRouter.put('/:id', validateId, validateRequest('client'), clientController.createOrUpdate);
 clientsRouter.patch('/:id', validateId, validateRequest('client'), clientController.updateData);
 
 clientsRouter.post('/', validateRequest('client'), clientController.addData);
-clientsRouter.get('/', validateQuery, clientController.getAll);
+clientsRouter.get('/', validateId, validateQuery('client'), clientController.getAll);

@@ -2,11 +2,8 @@
 ### recuperar informacion de los dispositivos
 GET http://localhost:3000/api/devices
 
-### recuperar informacion de un dispositivo
-GET http://localhost:3000/api/devices/2
-
 ### recuperar informacion de varios dispositivos
-GET http://localhost:3000/api/devices?ids=1,2,3,15,5
+GET http://localhost:3000/api/devices?id=1,54,6,
 
 ### CORREGIR FILTROS ZOD
 ### enviando informacion para agregar un dispositivo
@@ -20,7 +17,7 @@ Content-Type: application/json
 }
 
 ### enviando informacion para actualizar o agregar un dispositivo
-PUT http://localhost:3000/api/devices/2444
+PUT http://localhost:3000/api/devices/13
 Content-Type: application/json
 
 {
@@ -30,7 +27,7 @@ Content-Type: application/json
 }
 
 ### enviando informacion para actualizar parte de un dispositivo
-PATCH http://localhost:3000/api/devices/13
+PATCH http://localhost:3000/api/devices/1
 Content-Type: application/json
 
 {
@@ -38,4 +35,4 @@ Content-Type: application/json
 }
 
 ### eliminar informacion de un dispositivo
-DELETE http://localhost:3000/api/devices/12
+DELETE http://localhost:3000/api/devices/2

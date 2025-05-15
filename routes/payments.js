@@ -4,11 +4,10 @@ import { validateRequest, validateQuery, validateId} from '../middleware/validat
 
 export const paymentsRouter = Router();
 
-paymentsRouter.get('/:id', validateId, validateRequest('payment'), paymentController.getDataById);
-paymentsRouter.delete('/:id', validateId, validateRequest('payment'), paymentController.deleteData);
+paymentsRouter.delete('/:id', validateId, paymentController.deleteData);
 
 paymentsRouter.put('/:id', validateId, validateRequest('payment'), paymentController.createOrUpdate);
 paymentsRouter.patch('/:id', validateId, validateRequest('payment'), paymentController.updateData);
 
 paymentsRouter.post('/', validateRequest('payment'), paymentController.addData);
-paymentsRouter.get('/', validateQuery, paymentController.getAll);
+paymentsRouter.get('/', validateId, validateQuery('payment'), paymentController.getAll);

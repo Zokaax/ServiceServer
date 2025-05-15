@@ -32,7 +32,7 @@ export const validateRequest = (resource) => {
 
         if (['put', 'post'].includes(method)) {
             validation = validationSchemas[resource].create(req.body);
-        } else if (method === 'path')  {
+        } else if (method === 'patch')  {
             validation = validationSchemas[resource].update(req.body);
         }else {
             return next();
@@ -40,27 +40,47 @@ export const validateRequest = (resource) => {
         if (!validation.success ) {
             return next(new ValidationError(`${validation.error.issues[0].message} en la ruta ${req.method} ${req.originalUrl}.`));
         }
-        req.body = validation.data;
+        req.validateBody = validation.data;
         next();
     };
 };
 
-export function validateQuery(req, res, next){
+export const validateQuery = (resource) => {
+    return (req, res, next) => {
+        const query = req.query;
 
-    const query = req.query;
-    const validation = validateRawQuerys(query);
-    if (!validation.success) {
-        return next(new ValidationError(`${validation.error.issues[0].message} en la ruta ${req.method} ${req.originalUrl}.`));
-    }
-    next();
-}
+        let validation = validationSchemas[resource].update(query);
+
+        if (!validation.success ) {
+            return next(new ValidationError(`${validation.error.issues[0].message} en la ruta ${req.method} ${req.originalUrl}.`));
+        }
+
+        const data = {
+            ...validation.data
+        }
+
+        if (req.validateId){
+            data.id = req.validateId;
+        }
+        req.validateQuery = data
+        next();
+    };
+};
 
 export function validateId(req, res , next){
-    const id = req.params.id;
+
+    let id = req.params.id
+    ? req.params.id
+    : req.query.id || null
+
+    // console.log(id)
     const validation = validateRawId({id});
     if (!validation.success) {
         return next(new InvalidQueryError(`${validation.error.issues[0].message} en la ruta ${req.method} ${req.originalUrl}.`));
     }
+    req.validateId = validation.data.id
+    ? validation.data.id.toString()
+    : undefined
     next();
 
 }

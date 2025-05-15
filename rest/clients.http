@@ -1,40 +1,36 @@
 ## API
-### recuperar informacion de los clientes
+### recuperar informacion de todos los clientes
 GET http://localhost:3000/api/clients
 
-### recuperar informacion de un cliente
-GET http://localhost:3000/api/clients/180
-
-### recuperar informacion de varios clientes
-GET http://localhost:3000/api/clients?ids=150,4,151,200
+### recuperar informacion de clientes
+GET http://localhost:3000/api/clients?id=1,2,4,6,6
 
 ### enviando informacion para agregar un client
 POST http://localhost:3000/api/clients
 Content-Type: application/json
 
 {
-    "name": "carlos",
+    "name": "corlos",
     "phone": "12314513"
 }
 
 ### enviando informacion para actualizar o agregar un client
-PUT http://localhost:3000/api/clients/180
+PUT http://localhost:3000/api/clients/1
 Content-Type: application/json
 
 {
     "name": "jiren",
-    "phone": "rentado",
-    "apodo":"mariano el marciano"
+    "phone": "asasdasd"
     
 }
 
 ### enviando informacion para actualizar parte de un client
-PATCH http://localhost:3000/api/clients/180
+PATCH http://localhost:3000/api/clients/3
 Content-Type: application/json
 
 {
-    "name":"123"
+    "phone":"qwer"
 }
 
 ### eliminar informacion de un cliente
-DELETE http://localhost:3000/api/clients/180
+DELETE http://localhost:3000/api/clients/34

@@ -2,11 +2,8 @@
 ### recuperar informacion de los pagos
 GET http://localhost:3000/api/payments
 
-### recuperar informacion de un pago
-GET http://localhost:3000/api/payments/12
-
 ### recuperar informacion de varios pagos
-GET http://localhost:3000/api/payments?ids=1,4,5
+GET http://localhost:3000/api/payments?method=BINANCE
 
 ### enviando informacion para agregar un pago
 POST http://localhost:3000/api/payments
@@ -18,7 +15,7 @@ Content-Type: application/json
     "amoutBolivar": 324234,
     "amoutDolar": 23424,
     "saintInvoice": 123132,
-    "receptionId": 100
+    "receptionId": 3
 }
 
 ### enviando informacion para actualizar o agregar un pago
@@ -31,15 +28,15 @@ Content-Type: application/json
     "amoutBolivar": 13.21,
     "amoutDolar": 25.8,
     "saintInvoice": 1245213,
-    "receptionId": 3
+    "receptionId": 1
 }
 
 ### enviando informacion para actualizar parte de un pago
-PATCH http://localhost:3000/api/payments/20
+PATCH http://localhost:3000/api/payments/3
 Content-Type: application/json
 
 {
-    "receptionId": 3
+    "receptionId": 1
 }
 
 ### eliminar informacion de un pago

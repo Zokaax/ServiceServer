@@ -8,9 +8,9 @@ class ClientService extends BaseService(Client) {
         super();
     }
 
-    async getClients(idsArray = null) {
-        const clientsRequest = idsArray
-        ? await super.getByIds(idsArray)
+    async getClients(query = null) {
+        const clientsRequest = query
+        ? await super.getQuery(query)
         : await super.getAll(); 
         return clientsRequest;
     }

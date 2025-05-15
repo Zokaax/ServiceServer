@@ -11,10 +11,10 @@ class ReceptionService extends BaseService(Reception) {
         super();
     }
 
-    async getReceptions(idsArray = null) {
-        const receptionsRequest = idsArray
-            ? await super.getByIds(idsArray)
-            : await super.getAll(); 
+    async getReceptions(query = null) {
+        const receptionsRequest = query
+        ? await super.getQuery(query)
+        : await super.getAll(); 
         return receptionsRequest;
     }
 
@@ -23,21 +23,12 @@ class ReceptionService extends BaseService(Reception) {
         return reception;
     }
 
-    async getFullReceptions(idsArray = null) {
-        const receptionsRequest = idsArray
-                ? await super.getByIds(idsArray)
-                : await super.getAll(); 
+    async getFullReceptions(query = null) {
+        const receptionsRequest = query
+            ? await super.getQuery(query)
+            : await super.getAll(); 
         const fullReceptions = this.getFullReference(receptionsRequest);
         return fullReceptions
-
-    }
-    
-    async getFullReceptionById(id) {
-        const reception = await super.getById(id);
-
-        return (reception)
-        ? await this.getFullReference([reception])
-        : reception;
     }
     
     async getFullReference(receptionsRequest) {
@@ -63,6 +54,7 @@ class ReceptionService extends BaseService(Reception) {
     }
 
     async createReception(receptionData) {
+
          const createdReception = await super.create(receptionData);
          const createdId = Array.isArray(createdReception) ? createdReception[0] : createdReception;
          return {"id":createdId.toString(), ...receptionData}; 

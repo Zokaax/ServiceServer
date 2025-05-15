@@ -19,15 +19,20 @@ export const BaseService = (Model) => {
             return items; 
         }
 
-        async getByIds(idsArray) {
-            const items = await this.safeCall('getByIds', idsArray); 
+        // async getByIds(idsArray) {
+        //     const items = await this.safeCall('getByIds', idsArray); 
+        //     return items; 
+        // }
+        
+        async getQuery(query) {
+            const items = await this.safeCall('getByQuery', query); 
             return items; 
         }
 
-        async getField(field, value) {
-            const items = await this.safeCall('getByField', field, value); 
-            return items; 
-        }
+        // async getField(field, value) {
+        //     const items = await this.safeCall('getByField', field, value); 
+        //     return items; 
+        // }
 
         async create(data) { //retorna el id creado
             const idCreated = await this.safeCall('create', data);

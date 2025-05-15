@@ -5,6 +5,11 @@ export const database = knex({
     connection: {
         filename: './mydb.sqlite',
     },
+    pool: {
+        afterCreate: (conn, done) => {
+            conn.run('PRAGMA foreign_keys = ON', done);
+        }
+    }
 });
 
 // Crear la tabla cliente

@@ -4,11 +4,10 @@ import { validateRequest, validateQuery, validateId} from '../middleware/validat
 
 export const devicesRouter = Router();
 
-devicesRouter.get('/:id', validateId, validateRequest('device'), deviceController.getDataById);
-devicesRouter.delete('/:id', validateId, validateRequest('device'), deviceController.deleteData);
+devicesRouter.delete('/:id', validateId, deviceController.deleteData);
 
 devicesRouter.put('/:id', validateId, validateRequest('device'), deviceController.createOrUpdate);
 devicesRouter.patch('/:id', validateId, validateRequest('device'), deviceController.updateData);
 
 devicesRouter.post('/', validateRequest('device'), deviceController.addData);
-devicesRouter.get('/', validateQuery, deviceController.getAll);
+devicesRouter.get('/', validateId, validateQuery('device'), deviceController.getAll);

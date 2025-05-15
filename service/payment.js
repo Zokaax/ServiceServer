@@ -1,5 +1,6 @@
 import { BaseService } from './base.js';
 import { BaseModel } from '../model/base.js';
+import receptionService from './reception.js';
 
 const Payment = BaseModel('payments');
 
@@ -8,10 +9,10 @@ class PaymentService extends BaseService(Payment) {
         super();
     }
 
-    async getPayments(idsArray = null) {
+    async getPayments(query = null) {
 
-        const paymentsRequest = idsArray
-        ? await super.getByIds(idsArray)
+        const paymentsRequest = query
+        ? await super.getQuery(query)
         : await super.getAll(); 
 
         const paymentsWithOutReceptions = paymentsRequest.map(payment => {
@@ -33,7 +34,7 @@ class PaymentService extends BaseService(Payment) {
 
     async getPaymentByReceptions(receptionId) {
 
-        const paymentsRequest = await super.getField('receptionId', receptionId);
+        const paymentsRequest = await super.getQuery({receptionId:receptionId});
         const paymentsWithOutReceptions = paymentsRequest.map(payment => {
             return {
                 ...payment,
@@ -44,9 +45,10 @@ class PaymentService extends BaseService(Payment) {
     }
 
     async createPayment(paymentData) {
-         const createdPayment = await super.create(paymentData);
-         const createdId = Array.isArray(createdPayment) ? createdPayment[0] : createdPayment;
-         return {"id":createdId.toString(), ...paymentData}; 
+
+        const createdPayment = await super.create(paymentData);
+        const createdId = Array.isArray(createdPayment) ? createdPayment[0] : createdPayment;
+        return {"id":createdId.toString(), ...paymentData}; 
      }
 
      async updatePayment({ id, data }) {
@@ -55,7 +57,7 @@ class PaymentService extends BaseService(Payment) {
      }
 
      async deletePayment(id) {
-        const payment = await super.getById(id);
+        const payment = await this.getPaymentById(id);
         await super.delete(id);
         return {id, ...payment} 
      }
