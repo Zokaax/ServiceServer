@@ -3,6 +3,7 @@ import express, { json } from 'express';
 
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import path from 'path'
 
 // const { addClient, removeClient } = require('./config/serverManager.js');
 import { addClient, removeClient } from './config/serverManager.js'
@@ -17,6 +18,9 @@ import { errorHandler } from './middleware/errors/errorHandler.js'
 
 const app = express();
 
+app.set('view engine', 'ejs');
+//vistas
+
 // const logger = require('./middleware/logging/logger');
 // const errorHandler = require('./middleware/errors/errorHandler');
 
@@ -27,10 +31,15 @@ const port = process.env.port ?? 3000;
 app.use(json());
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(express.urlencoded({ extended: true }));
 
 // ruta estática
 app.use(express.static(join(__dirname, 'public')));
+
+
 
 // app.get('/events', (req, res) => {
 //     addClient(res);

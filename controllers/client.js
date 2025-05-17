@@ -4,7 +4,8 @@ import clientService from '../service/client.js';
 export default class ClientController {
 
     static async getAll(req, res, next) { //GET clients + ?ids='1,2,34,5,623,' etc
-        const query = (Object.keys(req.validateQuery).length > 0) 
+        console.log(req.validateQuery)
+        const query = (req.validateQuery && (Object.keys(req.validateQuery).length > 0))
         ? req.validateQuery
         : null;
 
