@@ -1,5 +1,9 @@
-import { BaseService } from './base.js';
-import { BaseModel } from '../model/base.js';
+import {
+    BaseService
+} from './base.js';
+import {
+    BaseModel
+} from '../model/base.js';
 
 const Client = BaseModel('clients');
 
@@ -8,10 +12,11 @@ class ClientService extends BaseService(Client) {
         super();
     }
 
-    async getClients(query = null) {
-        const clientsRequest = query
-        ? await super.getQuery(query)
-        : await super.getAll(); 
+    async getClients(query = null, like = null) {
+        console.log(like)
+        const clientsRequest = query ?
+            await super.getQuery(query, like) :
+            await super.getAll();
         return clientsRequest;
     }
 
@@ -19,25 +24,40 @@ class ClientService extends BaseService(Client) {
         const client = await super.getById(id);
         return client;
     }
-    
+
     async createClient(clientData) {
-         const createdClient = await super.create(clientData); // return id
-         const createdId = Array.isArray(createdClient) ? createdClient[0] : createdClient;
-         return {"id":createdId.toString(), ...clientData}; 
-     }
+        const createdClient = await super.create(clientData); // return id
+        const createdId = Array.isArray(createdClient) ? createdClient[0] : createdClient;
+        return {
+            "id": createdId.toString(),
+            ...clientData
+        };
+    }
 
-     async updateClient({ id, data }) {
-        await super.update({ id, data });
-        return {id, ...data}
-     }
+    async updateClient({
+        id,
+        data
+    }) {
+        await super.update({
+            id,
+            data
+        });
+        return {
+            id,
+            ...data
+        }
+    }
 
-     async deleteClient(id) {
+    async deleteClient(id) {
         const client = await super.getById(id);
         await super.delete(id);
-        return {id, ...client} 
-     }
+        return {
+            id,
+            ...client
+        }
+    }
 }
 
 const clientService = new ClientService();
 
-export default  clientService;
+export default clientService;

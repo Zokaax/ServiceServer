@@ -1,10 +1,12 @@
-import { database } from '../config/databaseCon.js';
+import {
+    database
+} from '../config/databaseCon.js';
 // modelo base para utilizar base de datos knex
 
 export const BaseModel = (tableName) => {
 
     return class {
-        
+
         static db = database;
         static tableName = tableName;
 
@@ -16,7 +18,8 @@ export const BaseModel = (tableName) => {
             return this.db(tableName).where('id', id).first();
         }
 
-        static async getByQuery(querys) {
+        static async getByQuery(querys, like) {
+            console.log(like)
             let queryBuilder = this.db(this.tableName).select('*');
 
             for (const fieldName in querys) {
@@ -28,9 +31,13 @@ export const BaseModel = (tableName) => {
                         const trimmedValues = values.map(v => v.trim());
                         queryBuilder = queryBuilder.whereIn(fieldName, trimmedValues);
                     } else {
-                        // value = `%${value}%`
-                        // queryBuilder = queryBuilder.where(fieldName, 'like', value);
-                        queryBuilder = queryBuilder.where(fieldName, value);
+
+                        if (like) {
+                            value = `%${value}%`
+                            queryBuilder = queryBuilder.where(fieldName, 'like', value);
+                        } else {
+                            queryBuilder = queryBuilder.where(fieldName, value);
+                        }
                     }
                 }
             }
@@ -43,7 +50,10 @@ export const BaseModel = (tableName) => {
             return this.db(tableName).insert(data);
         }
 
-        static async update({ id, data }) {
+        static async update({
+            id,
+            data
+        }) {
             return this.db(tableName).where('id', id).update(data);
         }
 
@@ -54,9 +64,9 @@ export const BaseModel = (tableName) => {
         static async exists(id) {
             const result = await this.db(this.tableName)
                 .where('id', id)
-                .count('* as count') 
-                .first(); 
-        
+                .count('* as count')
+                .first();
+
             const count = result ? result.count : 0;
             return count > 0;
         }

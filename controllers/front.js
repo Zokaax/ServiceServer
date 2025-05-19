@@ -1,8 +1,11 @@
 import path from 'path'
-import { fileURLToPath } from 'url';
+import {
+    fileURLToPath
+} from 'url';
 import ejs from 'ejs';
 import receptionService from '../service/reception.js';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(
+    import.meta.url));
 
 
 export default class FrontController {
@@ -24,7 +27,9 @@ export default class FrontController {
 
         const recepciones = await receptionService.getFullReceptions();
         // console.log(recepciones)
-        const content = await FrontController.renderPartial('panel', { recepciones });
+        const content = await FrontController.renderPartial('panel', {
+            recepciones
+        });
         const mainData = {
             content
         };
@@ -33,7 +38,7 @@ export default class FrontController {
 
     static async getReceptions(req, res) {
         const content = await FrontController.renderPartial('receptions');
-    
+
         const mainData = {
             content,
         };
@@ -42,7 +47,7 @@ export default class FrontController {
 
     static async getReports(req, res) {
         const content = await FrontController.renderPartial('reports');
-    
+
         const mainData = {
             content,
         };
@@ -51,7 +56,7 @@ export default class FrontController {
 
     static async getBios(req, res) {
         const content = await FrontController.renderPartial('bios');
-    
+
         const mainData = {
             content,
         };
@@ -60,10 +65,10 @@ export default class FrontController {
 
     static async getIncidents(req, res) {
         const content = await FrontController.renderPartial('incidents');
-    
+
         const mainData = {
             content,
         };
-        res.render('main', mainData)
+        res.render('lteadmin', mainData)
     }
 }

@@ -1,5 +1,9 @@
-import { BaseService } from './base.js';
-import { BaseModel } from '../model/base.js';
+import {
+    BaseService
+} from './base.js';
+import {
+    BaseModel
+} from '../model/base.js';
 import receptionService from './reception.js';
 
 const Payment = BaseModel('payments');
@@ -9,18 +13,18 @@ class PaymentService extends BaseService(Payment) {
         super();
     }
 
-    async getPayments(query = null) {
+    async getPayments(query = null, like = null) {
 
-        const paymentsRequest = query
-        ? await super.getQuery(query)
-        : await super.getAll(); 
+        const paymentsRequest = query ?
+            await super.getQuery(query, like) :
+            await super.getAll();
 
         const paymentsWithOutReceptions = paymentsRequest.map(payment => {
             return {
                 ...payment,
                 receptionId: undefined
-                };
-            })
+            };
+        })
         return paymentsWithOutReceptions;
     }
 
@@ -34,13 +38,15 @@ class PaymentService extends BaseService(Payment) {
 
     async getPaymentByReceptions(receptionId) {
 
-        const paymentsRequest = await super.getQuery({receptionId:receptionId});
+        const paymentsRequest = await super.getQuery({
+            receptionId: receptionId
+        });
         const paymentsWithOutReceptions = paymentsRequest.map(payment => {
             return {
                 ...payment,
                 receptionId: undefined
-                };
-            })
+            };
+        })
         return paymentsWithOutReceptions;
     }
 
@@ -48,19 +54,34 @@ class PaymentService extends BaseService(Payment) {
 
         const createdPayment = await super.create(paymentData);
         const createdId = Array.isArray(createdPayment) ? createdPayment[0] : createdPayment;
-        return {"id":createdId.toString(), ...paymentData}; 
-     }
+        return {
+            "id": createdId.toString(),
+            ...paymentData
+        };
+    }
 
-     async updatePayment({ id, data }) {
-        await super.update({ id, data });
-        return {id, ...data}
-     }
+    async updatePayment({
+        id,
+        data
+    }) {
+        await super.update({
+            id,
+            data
+        });
+        return {
+            id,
+            ...data
+        }
+    }
 
-     async deletePayment(id) {
+    async deletePayment(id) {
         const payment = await this.getPaymentById(id);
         await super.delete(id);
-        return {id, ...payment} 
-     }
+        return {
+            id,
+            ...payment
+        }
+    }
 }
 
 const paymentService = new PaymentService();

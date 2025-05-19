@@ -18,7 +18,7 @@ async function createClientTable() {
     if (!exists) {
         await database.schema.createTable('clients', (table) => {
             table.increments('id').primary();
-            table.string('name').notNullable();
+            table.string('name').notNullable().unique();
             table.string('phone');
         });
         console.log("Table 'client' added");
@@ -34,7 +34,7 @@ async function createDeviceTable() {
         await database.schema.createTable('devices', (table) => {
             table.increments('id').primary();
             table.string('brand');
-            table.string('type').notNullable();
+            table.string('type');
             table.string('model');
         });
         console.log("Table 'device' added");
@@ -55,9 +55,9 @@ async function createPaymentTable() {
             table.string('amoutBolivar');
 
             table.string('saintInvoice');
-            table.integer('receptionId').unsigned().nullable();
+            table.integer('receptionId');
 
-            table.foreign('receptionId').references('id').inTable('receptions').onDelete('CASCADE');
+            table.foreign('receptionId').references('id').inTable('receptions').onDelete('SET NULL');
 
             // table.string('support'); //img
             // table.('date');
@@ -79,8 +79,8 @@ async function createReceptionTable() {
             table.date('dateStart');
             table.date('dateEnd');
 
-            table.integer('clientId').unsigned().nullable();
-            table.integer('deviceId').unsigned().nullable();
+            table.integer('clientId').unsigned()
+            table.integer('deviceId').unsigned()
 
             table.text('clientIssue');
             table.text('workDone');

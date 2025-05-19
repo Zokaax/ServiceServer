@@ -18,20 +18,20 @@
     <tbody>
 
         <% if (recepciones && recepciones.length > 0) { %>
-                <% recepciones.forEach(recepcion => { %>
-                <tr>
-                    <th><%- recepcion.status %></th>
-                    <th><%- recepcion.saintOrder %></th>
-                    <th><%- recepcion.dateStart %></th>
-                    <% if (recepcion.client) { %>
-                    <th><%- recepcion.client.name %></th>
-                    <% } else { %>
-                        <th><% %></th>
+        <% recepciones.forEach(recepcion => { %>
+        <tr>
+            <th><%- recepcion.status %></th>
+            <th><%- recepcion.saintOrder %></th>
+            <th><%- recepcion.dateStart %></th>
+            <% if (recepcion.client) { %>
+            <th><%- recepcion.client.name %></th>
+            <% } else { %>
+            <th><% %></th>
                     <% } %>
-                </tr>
-                <% }); %>
+        </tr>
+        <% }); %>
         <% } else { %>
-            <p>No hay recepciones disponibles.</p>
+        <p>No hay recepciones disponibles.</p>
         <% } %>
 
     </tbody>
@@ -44,32 +44,32 @@
 <div class="container mt-3">
 
     <% if (recepciones && recepciones.length > 0) { %>
-        <% recepciones.forEach(recepcion => { %>
-            <div class="row recepcion-item mb-3 border rounded p-3 shadow-sm clickable-row" data-recepcion-id="<%- recepcion._id %>">
-                <div class="col-12 col-md-3 mb-2 mb-md-0">
-                    <strong>Estado:</strong> <%- recepcion.status || '' %>
-                </div>
-
-                <div class="col-12 col-md-3 mb-2 mb-md-0">
-                    <strong>Pedido:</strong> <%- recepcion.saintOrder %>
-                </div>
-
-                <div class="col-12 col-md-3 mb-2 mb-md-0">
-                    <strong>Fecha de Entrada:</strong> <%- recepcion.dateStart || '' %>
-                </div>
-
-                <div class="col-12 col-md-3">
-                    <strong>Cliente:</strong> <%= (recepcion.client) ? recepcion.client.name : '' %>
-                </div>
-            </div>
-
-        <% }); %>
-    <% } else { %>
-        <div class="row">
-            <div class="col">
-                <p>No hay recepciones disponibles.</p>
-            </div>
+    <% recepciones.forEach(recepcion => { %>
+    <div class="row recepcion-item mb-3 border rounded p-3 shadow-sm clickable-row" data-recepcion-id="<%- recepcion._id %>">
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <strong>Estado:</strong> <%- recepcion.status || '' %>
         </div>
+
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <strong>Pedido:</strong> <%- recepcion.saintOrder %>
+        </div>
+
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <strong>Fecha de Entrada:</strong> <%- recepcion.dateStart || '' %>
+        </div>
+
+        <div class="col-12 col-md-3">
+            <strong>Cliente:</strong> <%= (recepcion.client) ? recepcion.client.name : '' %>
+        </div>
+    </div>
+
+    <% }); %>
+    <% } else { %>
+    <div class="row">
+        <div class="col">
+            <p>No hay recepciones disponibles.</p>
+        </div>
+    </div>
     <% } %>
 </div>
 
@@ -87,13 +87,11 @@
                     <form id="receptionForm">
                         <div class="mb-3">
                             <label for="clientName" class="form-label">Cliente</label>
-                            <input type="text" class="form-control" id="clientName" name="clientName" required 
-                                   placeholder="Ingrese el nombre del cliente">
+                            <input type="text" class="form-control" id="clientName" name="clientName" required placeholder="Ingrese el nombre del cliente">
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" 
-                                   placeholder="Ingrese el número de teléfono" required>
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Ingrese el número de teléfono" required>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="submit" class="btn btn-primary">
@@ -110,13 +108,13 @@
 <script>
     document.getElementById('receptionForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        
+
         // Aquí puedes agregar la lógica para manejar el envío del formulario
         const formData = {
             clientName: document.getElementById('clientName').value,
             phoneNumber: document.getElementById('phoneNumber').value
         };
-        
+
         console.log('Datos del formulario:', formData);
         // Ejemplo de cómo podrías hacer una petición al servidor:
         // fetch('/api/recepciones', {
@@ -144,19 +142,37 @@
         border-radius: 10px;
         overflow: hidden;
     }
+
     .card-header {
         padding: 1rem 1.5rem;
     }
+
     .form-control:focus {
         border-color: #4e73df;
         box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
     }
+
     .btn-primary {
         background-color: #4e73df;
         border: none;
         padding: 0.5rem 1.5rem;
     }
+
     .btn-primary:hover {
         background-color: #2e59d9;
     }
 </style>
+
+
+
+
+
+
+<div class="mb-3">
+    <label for="deviceType" class="form-label">Tipo</label>
+    <input type="text" class="form-control" id="deviceType" name="type" required placeholder="Ingrese el tipo de equipo">
+</div>
+<div class="mb-3">
+    <label for="deviceBrand" class="form-label">Marca</label>
+    <input type="text" class="form-control" id="deviceBrand" name="brand" placeholder="Ingrese la marca del equipo">
+</div>

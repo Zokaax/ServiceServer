@@ -1,6 +1,12 @@
-import { Router } from 'express';
+import {
+    Router
+} from 'express';
 import clientController from '../controllers/client.js';
-import { validateRequest, validateQuery, validateId} from '../middleware/validation/validateRequest.js';
+import {
+    validateRequest,
+    validateQuery,
+    validateId
+} from '../middleware/validation/validateRequest.js';
 
 export const clientsRouter = Router();
 
@@ -11,3 +17,4 @@ clientsRouter.patch('/:id', validateId, validateRequest('client'), clientControl
 
 clientsRouter.post('/', validateRequest('client'), clientController.addData);
 clientsRouter.get('/', validateId, validateQuery('client'), clientController.getAll);
+clientsRouter.get('/like', validateId, validateQuery('client'), clientController.getLike);

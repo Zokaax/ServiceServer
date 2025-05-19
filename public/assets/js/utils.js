@@ -1,4 +1,11 @@
-function submitForm(submitButtonId, formId, postUrl, onSuccess, onError) {
+function submitForm({
+    submitButtonId,
+    formId,
+    postUrl,
+    onSuccess,
+    onError,
+    processForm
+}) {
     const submitButton = document.getElementById(submitButtonId);
     const form = document.getElementById(formId);
 
@@ -8,11 +15,22 @@ function submitForm(submitButtonId, formId, postUrl, onSuccess, onError) {
     }
 
     form.addEventListener('submit', function(e) {
-        // e.preventDefault();
+        e.preventDefault();
 
-    // submitButton.addEventListener('click', function(event) {
-        // event.preventDefault();
-        fetchPost(postUrl, form, onSuccess, onError);
+        const formData = new FormData(form);
+        let jsonForm = Object.fromEntries(formData.entries());
+
+        if (processForm) {
+            jsonForm = processForm(form);
+        }
+
+        fetchPost({
+            url: postUrl,
+            form,
+            json: jsonForm,
+            onSuccess,
+            onError
+        });
     });
 };
 
@@ -31,24 +49,29 @@ function updateElement(elementId, getUrl, onSuccess, onError) {
 }
 
 
-async function fetchPost(url, form, funcionok, funcionerr) {
+async function fetchPost({
+    url,
+    form,
+    json,
+    onSuccess,
+    onError
+}) {
 
-    const formData = new FormData(form);
-    const jsonForm = Object.fromEntries(formData.entries());
+
 
     return fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(jsonForm),
+            body: JSON.stringify(json),
         })
         .then(response => response.json())
         .then(data => {
-            funcionok(data, form);
+            onSuccess(data, form);
         })
         .catch(error => {
-            funcionerr(error);
+            onError(error);
         });
 }
 

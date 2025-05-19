@@ -9,13 +9,11 @@
                     <form id="addClientForm">
                         <div class="mb-3">
                             <label for="clientName" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="clientName" name="name" required 
-                                   placeholder="Ingrese el nombre del cliente">
+                            <input type="text" class="form-control" id="clientName" name="name" required placeholder="Ingrese el nombre del cliente">
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="phoneNumber" name="phone" 
-                                   placeholder="Ingrese el número de teléfono">
+                            <input type="tel" class="form-control" id="phoneNumber" name="phone" placeholder="Ingrese el número de teléfono">
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button id="submitAddClient" class="btn btn-primary">
@@ -28,225 +26,313 @@
         </div>
 
         <div class="col-md-6">
-          <div class="card shadow">
-              <div class="card-header bg-primary text-white">
-                  <h4 class="mb-0">Nuevo Dispositivo</h4>
-              </div>
-              <div class="card-body">
-                  <form id="addDeviceForm">
-                      <div class="mb-3">
-                          <label for="deviceType" class="form-label">Tipo</label>
-                          <input type="text" class="form-control" id="deviceType" name="type" required 
-                                 placeholder="Ingrese el tipo de equipo">
-                      </div>
-                      <div class="mb-3">
-                        <label for="deviceBrand" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="deviceBrand" name="brand" 
-                               placeholder="Ingrese la marca del equipo">
-                    </div>
-                      <div class="mb-3">
-                          <label for="deviceModel" class="form-label">Modelo</label>
-                          <input type="tel" class="form-control" id="deviceModel" name="model" 
-                                 placeholder="Ingrese el modelo del equipo">
-                      </div>
-                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                          <button id="submitAddDevice" class="btn btn-primary">
-                              <i class="fas fa-paper-plane me-2"></i> Registrar
-                          </button>
-                      </div>
-                  </form>
-              </div>
-          </div>
-      </div>
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Nuevo Dispositivo</h4>
+                </div>
+                <div class="card-body">
+                    <form id="addDeviceForm">
+
+                        <div class="mb-3">
+                            <label for="deviceSelect" class="form-label">Tipo: </label>
+                            <select class="form-select" id="deviceSelect" name="type" required>
+                                <option value="" selected disabled>Seleccione Tipo</option>
+                                <option value="LAPTOP">LAPTOP</option>
+                                <option value="DESKTOP">DESKTOP</option>
+                                <option value="AIO">AIO</option>
+                                <option value="OTRO">OTRO</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="receptionStatus" class="form-label">Marca</label>
+                            <select class="form-select" id="receptionStatus" name="brand">
+                                <option value="" selected disabled>Seleccione la Marca</option>
+                                <option value="Dell">DELL</option>
+                                <option value="Lenovo">LENOVO</option>
+                                <option value="HP">HP</option>
+                                <option value="Gateway">GATEWAY</option>
+                                <option value="Soneview">SONEVIEW</option>
+                                <option value="VIT">VIT</option>
+                                <option value="Samsung">SAMSUNG</option>
+                                <option value="OTRO">OTRO</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="deviceModel" class="form-label">Modelo</label>
+                            <input type="tel" class="form-control" id="deviceModel" name="model" placeholder="Ingrese el modelo del equipo">
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button id="submitAddDevice" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i> Registrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
-<!-- Tercer formulario para recepción de equipos -->
-<div class="row mt-4">
-  <div class="col-12">
-    <div class="card shadow">
-      <div class="card-header bg-primary text-white">
-        <h4 class="mb-0">Nueva Recepción</h4>
-      </div>
-      <div class="card-body">
-        <form id="addReceptionForm">
-          <div class="row">
-            <!-- Columna izquierda -->
-            <div class="col-md-6">
-              <!-- Campo de pedido -->
-              <div class="mb-3">
-                <label for="ReceptionSaintOrder" class="form-label">Número de Pedido</label>
-                <input type="text" class="form-control" id="ReceptionSaintOrder" name="saintOrder" 
-                       placeholder="Ingrese el número de pedido">
-              </div>
+    <!-- Tercer formulario para recepción de equipos -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Nueva Recepción</h4>
+                </div>
+                <div class="card-body">
+                    <form id="addReceptionForm">
+                        <div class="row">
+                            <!-- Columna izquierda -->
+                            <div class="col-md-6">
+                                <!-- Campo de pedido -->
+                                <div class="mb-3">
+                                    <label for="ReceptionSaintOrder" class="form-label">Número de Pedido</label>
+                                    <input type="text" class="form-control" id="ReceptionSaintOrder" name="saintOrder" placeholder="Ingrese el número de pedido">
+                                </div>
 
-              <!-- Fecha de inicio -->
-              <div class="mb-3">
-                <label for="receptionDateStart" class="form-label">Fecha de Inicio</label>
-                <input type="date" class="form-control" id="receptionDateStart" name="dateStart">
-              </div>
+                                <!-- Fecha de inicio -->
+                                <div class="mb-3">
+                                    <label for="receptionDateStart" class="form-label">Fecha de Registro</label>
+                                    <input type="date" class="form-control" id="receptionDateStart" name="dateStart">
+                                </div>
 
-                            <!-- Estado del equipo -->
-                            <div class="mb-3">
-                              <label for="receptionStatus" class="form-label">Estado</label>
-                              <select class="form-select" id="receptionStatus" name="status" required>
-                                <option value="" selected disabled>Seleccione un estado</option>
-                                <option value="EN PROCESO">EN PROCESO</option>
-                                <option value="PENDIENTE">PENDIENTE</option>
-                                <option value="COBRADO">COBRADO</option>
-                                <option value="PAGADO">PAGADO</option>
-                                <option value="GARANTIA">GARANTIA</option>
-                                <option value="DEVOLUCION">DEVOLUCION</option>
-                                <option value="OTRO">OTRO</option>
-                              </select>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.getElementById('receptionDateStart');
+                                        const today = new Date();
+                                        const year = today.getFullYear();
+                                        const month = String(today.getMonth() + 1).padStart(2, '0'); // Los meses en JS son de 0 a 11
+                                        const day = String(today.getDate()).padStart(2, '0');
+                                        const currentDate = `${year}-${month}-${day}`;
+                                        dateInput.value = currentDate;
+                                    });
+                                </script>
+
+                                <!-- Estado del equipo -->
+                                <div class="mb-3">
+                                    <label for="receptionStatus" class="form-label">Estado</label>
+                                    <select class="form-select" id="receptionStatus" name="status" required>
+                                        <option value="" selected disabled>Seleccione un estado</option>
+                                        <option value="EN PROCESO">EN PROCESO</option>
+                                        <option value="PENDIENTE">PENDIENTE</option>
+                                        <option value="COBRADO">COBRADO</option>
+                                        <option value="PAGADO">PAGADO</option>
+                                        <option value="GARANTIA">GARANTIA</option>
+                                        <option value="DEVOLUCION">DEVOLUCION</option>
+                                        <option value="OTRO">OTRO</option>
+                                    </select>
+                                </div>
                             </div>
-            </div>
 
-            <!-- Columna derecha -->
-            <div class="col-md-6">
-              <!-- Búsqueda de cliente -->
-              <div class="mb-3">
-                <label for="receptionClientSearch" class="form-label">Buscar Cliente</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="receptionClientSearch" required 
-                         placeholder="Buscar cliente...">
-                  <button class="btn btn-outline-secondary" type="button" id="searchClientBtn">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-                <!-- <div id="clientResults" class="list-group mt-2 d-none"> -->
-
-                <!-- Los resultados de la búsqueda se cargarán aquí -->
-                 
-                <!-- </div> -->
-                <!-- <input type="hidden" id="selectedClientId" name="clientId"> -->
-                <!-- <div id="selectedClient" class="mt-2 p-2 bg-light rounded d-none"> -->
-                  <!-- <small class="text-muted">Cliente seleccionado: </small> -->
-                  <!-- <span id="selectedClientName"></span> -->
-                  <!-- <button type="button" class="btn btn-sm btn-link text-danger" id="clearClient"> -->
-                    <!-- <i class="fas fa-times"></i> -->
-                  <!-- </button> -->
-                <!-- </div> -->
-              </div>
+                            <!-- Columna derecha -->
+                            <div class="col-md-6">
+                                <!-- Búsqueda de cliente -->
+                                <div class="mb-3">
+                                    <label for="receptionClientSearch" class="form-label">Buscar Cliente</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="receptionClientSearch" required placeholder="Nombre del cliente...">
+                                        <div id="searchClientsResults" class="list-group mt-5" style=" position: absolute; z-index: 1000; width: 100%;
+                                        max-height: 300px; overflow-y: auto; display: none;">
+                                        </div>
+                                    </div>
 
 
-              <!-- Búsqueda de dispositivo -->
-              <div class="mb-3">
-                <label for="receptionDeviceSearch" class="form-label">Seleccionar Dispositivo</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="receptionDeviceSearch" 
-                         placeholder="Buscar dispositivo...">
-                  <button class="btn btn-outline-secondary" type="button" id="searchDeviceBtn">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-                <!-- <div id="deviceResults" class="list-group mt-2 d-none"> -->
-                  <!-- Los resultados de la búsqueda se cargarán aquí -->
-                <!-- </div> -->
-                <!-- <input type="hidden" id="selectedDeviceId" name="deviceId"> -->
-                <!-- <div id="selectedDevice" class="mt-2 p-2 bg-light rounded d-none"> -->
-                  <!-- <small class="text-muted">Dispositivo seleccionado: </small> -->
-                  <!-- <span id="selectedDeviceName"></span> -->
-                  <!-- <button type="button" class="btn btn-sm btn-link text-danger" id="clearDevice">
+                                    <script>
+                                        searchBar({
+                                            listUrl: ['/api/clients/like?name'],
+                                            input: 'receptionClientSearch',
+                                            container: 'searchClientsResults',
+                                            configContent: (result, item) => {
+                                                item.textContent = `Cliente: ${result.name}`
+                                                item.dataset.clientId = result.id
+                                            },
+                                            noContent: (resultContainer) => {
+                                                const noResultsItem = document.createElement('span');
+                                                noResultsItem.classList.add('list-group-item', 'disabled');
+                                                noResultsItem.textContent = 'No se encontraron clientes.';
+                                                resultContainer.appendChild(noResultsItem);
+                                                resultContainer.style.display = 'block';
+                                            },
+                                            errorRequest: (error) => {
+                                                if (!error.errorCode == '404') {
+                                                    console.log(error, 'element not found')
+                                                } else if (!error.errorCode == '500') {
+                                                    console.log(error, 'ha habido un problema con la base de datos')
+                                                }
+                                            }
+                                        })
+                                    </script>
+
+                                    <!-- <div id="clientResults" class="list-group mt-2 d-none"> -->
+
+                                    <!-- Los resultados de la búsqueda se cargarán aquí -->
+
+                                    <!-- </div> -->
+                                    <!-- <input type="hidden" id="selectedClientId" name="clientId"> -->
+                                    <!-- <div id="selectedClient" class="mt-2 p-2 bg-light rounded d-none"> -->
+                                    <!-- <small class="text-muted">Cliente seleccionado: </small> -->
+                                    <!-- <span id="selectedClientName"></span> -->
+                                    <!-- <button type="button" class="btn btn-sm btn-link text-danger" id="clearClient"> -->
+                                    <!-- <i class="fas fa-times"></i> -->
+                                    <!-- </button> -->
+                                    <!-- </div> -->
+                                </div>
+
+
+                                <!-- Búsqueda de dispositivo -->
+                                <div class="mb-3 input-group">
+                                    <label for="receptionDeviceSearch" class="form-label">Seleccionar Dispositivo</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="receptionDeviceSearch" placeholder="Tipo de dispositivo...">
+                                        <!-- <div id="searchResults" class="list-group mt-5" style="position: absolute; z-index: 1000; width: 100%; ">
+                                        </div> -->
+
+                                        <div id="searchDeviceResults" class="list-group mt-5" style=" position: absolute; z-index: 1000; width: 100%;
+                                                                                                 max-height: 300px; overflow-y: auto; display: none;">
+                                        </div>
+                                    </div>
+                                    <!-- <div id="deviceResults" class="list-group mt-2 d-none"> -->
+                                    <!-- Los resultados de la búsqueda se cargarán aquí -->
+                                    <!-- </div> -->
+                                    <!-- <input type="hidden" id="selectedDeviceId" name="deviceId"> -->
+                                    <!-- <div id="selectedDevice" class="mt-2 p-2 bg-light rounded d-none"> -->
+                                    <!-- <small class="text-muted">Dispositivo seleccionado: </small> -->
+                                    <!-- <span id="selectedDeviceName"></span> -->
+                                    <!-- <button type="button" class="btn btn-sm btn-link text-danger" id="clearDevice">
                     <i class="fas fa-times"></i>
                   </button> -->
-                <!-- </div> -->
-              </div>
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            searchBar({
+                                listUrl: ['/api/devices/like?type', '/api/devices/like?brand', '/api/devices/like?model'],
+                                input: 'receptionDeviceSearch',
+                                container: 'searchDeviceResults',
+                                configContent: (result, item) => {
+                                    item.textContent = `${result.type} ${result.brand} ${result.model}`
+                                },
+                                noContent: (resultContainer) => {
+                                    const noResultsItem = document.createElement('span');
+                                    noResultsItem.classList.add('list-group-item', 'disabled');
+                                    noResultsItem.textContent = 'No se encontraron equipos.';
+                                    resultContainer.appendChild(noResultsItem);
+                                    resultContainer.style.display = 'block';
+                                },
+                                errorRequest: (error) => {
+                                    if (!error.errorCode == '404') {
+                                        console.log(error, 'element not found')
+                                    } else if (!error.errorCode == '500') {
+                                        console.log(error, 'ha habido un problema con la base de datos')
+                                    }
+                                }
+                            })
+                        </script>
+
+
+
+                        <!-- Condición del equipo -->
+                        <div class="mb-3">
+                            <label for="receptionClientIssue" class="form-label">Condición del Equipo</label>
+                            <textarea class="form-control" id="receptionClientIssue" name="clientIssue" rows="4" placeholder="Describa la condición del equipo..."></textarea>
+                        </div>
+
+                        <!-- Trabajo realizado -->
+                        <div class="mb-3">
+                            <label for="receptionWorkDone" class="form-label">Trabajo Realizado</label>
+                            <textarea class="form-control" id="receptionWorkDone" name="workDone" rows="4" placeholder="Describa el trabajo realizado..."></textarea>
+                        </div>
+
+
+                        <!-- Botón de envío -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button id="submitAddReception" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Registrar Recepción
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            </div>
-
-
-
-
-          <!-- Condición del equipo -->
-          <div class="mb-3">
-            <label for="receptionClientIssue" class="form-label">Condición del Equipo</label>
-            <textarea class="form-control" id="receptionClientIssue" name="clientIssue" 
-                      rows="4" placeholder="Describa la condición del equipo..." ></textarea>
-          </div>
-
-          <!-- Trabajo realizado -->
-          <div class="mb-3">
-            <label for="receptionWorkDone" class="form-label">Trabajo Realizado</label>
-            <textarea class="form-control" id="receptionWorkDone" name="workDone" 
-                      rows="4" placeholder="Describa el trabajo realizado..."></textarea>
-          </div>
-
-
-          <!-- Botón de envío -->
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button id="submitAddReception" class="btn btn-primary">
-              <i class="fas fa-save me-2"></i> Registrar Recepción
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
-</div>
 
 </div>
 
 
 
 <script>
+    submitForm({
+        submitButtonId: 'submitAddReception',
+        formId: 'addReceptionForm',
+        postUrl: '/api/receptions',
+        onSuccess: (data, form) => {
+            if (data.success) {
+                form.reset();
+                document.getElementById('deviceType').focus()
+                alert('la recepcion se ha agregado exitosamente');
+            } else {
+                console.log(data)
+                alert(`No se ha realizado la operacion: ${data.message}`);
+            }
+        },
+        onError: (error) => {
+            console.log(error)
+            alert('No se ha podido encontrar al servidor');
+        },
+        processForm: (form) => {
+            const formData = new FormData(form);
+            const jsonForm = Object.fromEntries(formData.entries());
+            const clientInput = document.getElementById('receptionClientSearch');
+            const deviceInput = document.getElementById('receptionDeviceSearch');
+            jsonForm.clientId = Number(clientInput.dataset.id);
+            jsonForm.deviceId = Number(deviceInput.dataset.id);
+            return jsonForm;
+        }
+    });
 
-submitForm(
-    'submitAddReception',
-    'addReceptionForm',
-    '/api/receptions',
-    (data, form) => {
-      if (data.success){
-        form.reset();
-        alert('la recepcion se ha agregado exitosamente');
-      }else{
-        console.log(data)
-        alert(`No se ha realizado la operacion: ${data.message}`);
-      }
-    },
-    (error) => {
-        console.log(error)
-        alert('No se ha podido encontrar al servidor');
-    }
-);
+    submitForm({
+        submitButtonId: 'submitAddDevice',
+        formId: 'addDeviceForm',
+        postUrl: '/api/devices',
+        onSuccess: (data, form) => {
+            if (data.success) {
+                form.reset();
+                alert('el dispositivo se ha agregado exitosamente');
+            } else {
+                console.log(data)
+                alert(`No se ha realizado la operacion: ${data.message}`);
+            }
+        },
+        onError: (error) => {
+            console.log(error)
+            alert('No se ha podido encontrar al servidor');
+        }
+    });
 
-submitForm(
-    'submitAddDevice',
-    'addDeviceForm',
-    '/api/devices',
-    (data, form) => {
-      if (data.success){
-        form.reset();
-        alert('el dispositivo se ha agregado exitosamente');
-      }else{
-        console.log(data)
-        alert(`No se ha realizado la operacion: ${data.message}`);
-      }
-    },
-    (error) => {
-        console.log(error)
-        alert('No se ha podido encontrar al servidor');
-    }
-);
-
-submitForm(
-    'submitAddDevice',
-    'addClientForm',
-    '/api/clients',
-    (data, form) => {
-      console.log(data)
-      if (data.success){
-        form.reset();
-        alert('el cliente se ha agregado exitosamente');
-      }else{
-        console.log(data)
-        alert(`No se ha realizado la operacion: ${data.message}`);
-      }
-    },
-    (error) => {
-        console.log(error)
-        alert('No se ha podido encontrar al servidor');
-    }
-);
+    submitForm({
+        submitButtonId: 'submitAddDevice',
+        formId: 'addClientForm',
+        postUrl: '/api/clients',
+        onSuccess: (data, form) => {
+            console.log(data)
+            if (data.success) {
+                form.reset();
+                alert('el cliente se ha agregado exitosamente');
+            } else {
+                console.log(data)
+                alert(`No se ha realizado la operacion: ${data.message}`);
+            }
+        },
+        onError: (error) => {
+            console.log(error)
+            alert('No se ha podido encontrar al servidor');
+        }
+    });
 </script>
 
 <style>
@@ -255,18 +341,22 @@ submitForm(
         border-radius: 10px;
         overflow: hidden;
     }
+
     .card-header {
         padding: 1rem 1.5rem;
     }
+
     .form-control:focus {
         border-color: #4e73df;
         box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
     }
+
     .btn-primary {
         background-color: #4e73df;
         border: none;
         padding: 0.5rem 1.5rem;
     }
+
     .btn-primary:hover {
         background-color: #2e59d9;
     }

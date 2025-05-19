@@ -8,37 +8,37 @@
     <div class="card-body">
         <div class="table-responsive">
 
-            
-<div class="container mt-3">
 
-    <div class="row recepcion-item mb-0 border rounded p-3 shadow-sm clickable-row text-gray-900">
-        <div class="col-12 col-md-3 mb-2 mb-md-0">
-            <strong>Estado</strong> 
-        </div>
+            <div class="container mt-3">
 
-        <div class="col-12 col-md-3 mb-2 mb-md-0">
-            <strong>Pedido</strong> 
-        </div>
+                <div class="row recepcion-item mb-0 border rounded p-3 shadow-sm clickable-row text-gray-900">
+                    <div class="col-12 col-md-3 mb-2 mb-md-0">
+                        <strong>Estado</strong>
+                    </div>
 
-        <div class="col-12 col-md-3 mb-2 mb-md-0">
-            <strong>Fecha de Entrada</strong> 
-        </div>
+                    <div class="col-12 col-md-3 mb-2 mb-md-0">
+                        <strong>Pedido</strong>
+                    </div>
 
-        <div class="col-12 col-md-3">
-            <strong>Cliente</strong> 
-        </div>
-    </div>
+                    <div class="col-12 col-md-3 mb-2 mb-md-0">
+                        <strong>Fecha de Entrada</strong>
+                    </div>
 
-    <% if (recepciones && recepciones.length > 0) { 
+                    <div class="col-12 col-md-3">
+                        <strong>Cliente</strong>
+                    </div>
+                </div>
+
+                <% if (recepciones && recepciones.length > 0) { 
          recepciones.forEach(recepcion => { %>
-        
-            <% let background = 'bg-gradient-primary';
+
+                <% let background = 'bg-gradient-primary';
              let text = 'text-gray-900 text-lg' %>
 
-            <%
+                <%
             switch (recepcion.status) {
                 case 'EN PROCESO':
-                background = 'bg-gradient-primary';
+                background = 'bg-gradient-light';
                 break;
                 case 'COBRADO':
                 background = 'bg-gradient-success';
@@ -55,40 +55,37 @@
                 default:
             }
             %>
-            
-            <a href="">
-                <div class="row recepcion-item mb-0 border p-3 clickable-row <%= background %> <%= text %>" data-recepcion-id="<%- recepcion._id %>">
-                    <div class="col-12 col-md-3 mb-2 mb-md-0">
-                        <%- recepcion.status || '' %>
+
+                <a href="">
+                    <div class="row recepcion-item mb-0 border p-3 clickable-row <%= background %> <%= text %>" data-recepcion-id="<%- recepcion._id %>">
+                        <div class="col-12 col-md-3 mb-2 mb-md-0">
+                            <%- recepcion.status || '' %>
+                        </div>
+
+                        <div class="col-12 col-md-3 mb-2 mb-md-0">
+                            <%- recepcion.saintOrder %>
+                        </div>
+
+                        <div class="col-12 col-md-3 mb-2 mb-md-0">
+                            <%- recepcion.dateStart || '' %>
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <%= (recepcion.client) ? recepcion.client.name : '' %>
+                        </div>
                     </div>
-                    
-                    <div class="col-12 col-md-3 mb-2 mb-md-0">
-                        <%- recepcion.saintOrder %>
-                    </div>
-                    
-                    <div class="col-12 col-md-3 mb-2 mb-md-0">
-                        <%- recepcion.dateStart || '' %>
-                    </div>
-                    
-                    <div class="col-12 col-md-3">
-                        <%= (recepcion.client) ? recepcion.client.name : '' %>
+                </a>
+
+                <% }); 
+       } else { %>
+                <div class="row">
+                    <div class="col">
+                        <p>No hay recepciones disponibles.</p>
                     </div>
                 </div>
-            </a>
-
-        <% }); 
-       } else { %>
-        <div class="row">
-            <div class="col">
-                <p>No hay recepciones disponibles.</p>
+                <% } %>
             </div>
-        </div>
-    <% } %>
-</div>
-            
+
         </div>
     </div>
 </div>
-
-
-
