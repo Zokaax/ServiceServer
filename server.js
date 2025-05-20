@@ -1,4 +1,6 @@
 import express, { json } from 'express';
+import cors from 'cors';
+
 // import config from './index.ts';
 
 import { fileURLToPath } from 'url';
@@ -16,7 +18,10 @@ import { receptionsRouter } from './routes/receptions.js';
 import { paymentsRouter } from './routes/payments.js';
 import { errorHandler } from './middleware/errors/errorHandler.js'
 
+
 const app = express();
+
+app.use(cors());
 
 app.set('view engine', 'ejs');
 //vistas
