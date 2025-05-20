@@ -54,7 +54,7 @@ async function createPaymentTable() {
             table.string('amoutDolar');
             table.string('amoutBolivar');
 
-            table.string('saintInvoice');
+            // table.string('saintInvoice');
             table.integer('receptionId');
 
             table.foreign('receptionId').references('id').inTable('receptions').onDelete('SET NULL');

@@ -27,9 +27,9 @@ class ReceptionService extends BaseService(Reception) {
         return reception;
     }
 
-    async getFullReceptions(query = null) {
+    async getFullReceptions(query = null, like = null) {
         const receptionsRequest = query ?
-            await super.getQuery(query) :
+            await super.getQuery(query, like) :
             await super.getAll();
         const fullReceptions = this.getFullReference(receptionsRequest);
         return fullReceptions

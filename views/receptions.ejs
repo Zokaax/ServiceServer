@@ -1,6 +1,6 @@
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Nuevo Cliente</h4>
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Nuevo Dispositivo</h4>
@@ -66,6 +66,108 @@
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button id="submitAddDevice" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i> Registrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Nuevo Pago</h4>
+                </div>
+                <div class="card-body">
+                    <form id="addPaymentForm">
+
+                        <div class="mb-3">
+                            <label for="methodSelect" class="form-label">Metodo: </label>
+                            <select class="form-select" id="methodSelect" name="method" required>
+                                <option value="" selected disabled>Seleccione Metodo</option>
+                                <option value="PROVINCIAL">PROVINCIAL</option>
+                                <option value="BANCAMIGA">BANCAMIGA</option>
+                                <option value="BOLIVARES EFECTIVO">BOLIVARES EFECTIVO</option>
+                                <option value="DIVISAS">DIVISAS</option>
+                                <option value="BINANCE">BINANCE</option>
+                                <option value="CRUCE">CRUCE</option>
+                                <option value="OTRO">OTRO</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="referenceInput" class="form-label">Referencia</label>
+                            <input type="text" class="form-control" id="referenceInput" name="reference" placeholder="Ingrese la referencia del banco">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dolarsInput" class="form-label">Dolares</label>
+                            <input type="text" class="form-control" id="dolarsInput" name="amoutDolar" placeholder="Ingrese la cantidad en dolares">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="bolivarInput" class="form-label">Bolivares</label>
+                            <input type="text" class="form-control" id="referenceInput" name="amoutBolivar" placeholder="Ingrese la cantidad en bolivares">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="saintInvoiceInput" class="form-label">Pedido</label>
+                            <input type="text" class="form-control" id="saintInvoiceInput" name="saintInvoice" placeholder="Ingrese el pedido de referencia">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="paymentReceptionSearch" class="form-label">Buscar Recepcion</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="paymentReceptionSearch" required placeholder="Nombre del cliente o pedido">
+                                <div id="searchReceptionsResults" class="list-group mt-5" style=" position: absolute; z-index: 1000; width: 100%;
+                                max-height: 300px; overflow-y: auto; display: none;">
+                                </div>
+                            </div>
+
+
+                            <script>
+                                searchBar({
+                                    listUrl: ['/api/receptions/like?saintOrder'],
+                                    input: 'searchReceptionsResults',
+                                    container: 'searchClientsResults',
+                                    configContent: (result, item) => {
+                                        item.textContent = `Cliente: ${result.name}`
+                                        item.dataset.clientId = result.id
+                                    },
+                                    noContent: (resultContainer) => {
+                                        const noResultsItem = document.createElement('span');
+                                        noResultsItem.classList.add('list-group-item', 'disabled');
+                                        noResultsItem.textContent = 'No se encontraron clientes.';
+                                        resultContainer.appendChild(noResultsItem);
+                                        resultContainer.style.display = 'block';
+                                    },
+                                    errorRequest: (error) => {
+                                        if (!error.errorCode == '404') {
+                                            console.log(error, 'element not found')
+                                        } else if (!error.errorCode == '500') {
+                                            console.log(error, 'ha habido un problema con la base de datos')
+                                        }
+                                    }
+                                })
+                            </script>
+
+                            <!-- <div id="clientResults" class="list-group mt-2 d-none"> -->
+
+                            <!-- Los resultados de la búsqueda se cargarán aquí -->
+
+                            <!-- </div> -->
+                            <!-- <input type="hidden" id="selectedClientId" name="clientId"> -->
+                            <!-- <div id="selectedClient" class="mt-2 p-2 bg-light rounded d-none"> -->
+                            <!-- <small class="text-muted">Cliente seleccionado: </small> -->
+                            <!-- <span id="selectedClientName"></span> -->
+                            <!-- <button type="button" class="btn btn-sm btn-link text-danger" id="clearClient"> -->
+                            <!-- <i class="fas fa-times"></i> -->
+                            <!-- </button> -->
+                            <!-- </div> -->
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button id="submitAddPayment" class="btn btn-primary">
                                 <i class="fas fa-paper-plane me-2"></i> Registrar
                             </button>
                         </div>
