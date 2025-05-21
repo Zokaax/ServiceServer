@@ -12,8 +12,8 @@ export const receptionsRouter = Router();
 
 receptionsRouter.post('/', validateRequest('reception'), receptionController.addData);
 receptionsRouter.get('/', validateId, validateQuery('reception'), receptionController.getAll);
-receptionsRouter.get('/full', validateId, validateQuery('reception'), receptionController.getFullAll);
-// receptionsRouter.get('/like', validateId, validateQuery('reception'), receptionController.getLike);
+receptionsRouter.get('/full', validateId, validateQuery('reception'), receptionController.getAll);
+receptionsRouter.get('/like', validateId, validateQuery('reception'), receptionController.getAll);
 
 receptionsRouter.delete('/:id', validateId, receptionController.deleteData);
 

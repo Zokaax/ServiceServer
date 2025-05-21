@@ -12,8 +12,10 @@ class ClientService extends BaseService(Client) {
         super();
     }
 
-    async getClients(query = null, like = null) {
-        console.log(like)
+    async getClients({
+        query = null,
+        like = false
+    }) {
         const clientsRequest = query ?
             await super.getQuery(query, like) :
             await super.getAll();

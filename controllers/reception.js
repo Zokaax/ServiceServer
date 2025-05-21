@@ -12,25 +12,24 @@ export default class ReceptionController {
             null;
 
         try {
-            const receptions = await receptionService.getReceptions(query);
-            (receptions.length > 0) ?
-            res.status(200).json({
-                success: true,
-                data: receptions
-            }): next(new NotFoundError(`${req.method} ${req.originalUrl}.`));
-        } catch (error) {
-            next(new DatabaseError(`${req.method} ${req.originalUrl}.`));
-        }
-    }
-
-    static async getFullAll(req, res, next) { //GET receptions + ?ids='1,2,34,5,623,' etc
-        const query = (Object.keys(req.validateQuery).length > 0) ?
-            req.validateQuery :
-            null;
-
-        try {
-            const receptions = await receptionService.getFullReceptions(query);
-            (receptions.length > 0) ?
+            let receptions;
+            if (req.path == '/') {
+                receptions = await receptionService.getReceptions({
+                    query
+                });
+            } else if (req.path == '/full') {
+                receptions = await receptionService.getReceptions({
+                    query,
+                    full: true
+                });
+            } else if (req.path == '/like') {
+                receptions = await receptionService.getReceptions({
+                    query,
+                    full: true,
+                    like: true
+                });
+            }
+            (receptions && receptions.length > 0) ?
             res.status(200).json({
                 success: true,
                 data: receptions

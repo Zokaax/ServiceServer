@@ -6,7 +6,7 @@
                     <h4 class="mb-0">Nuevo Cliente</h4>
                 </div>
                 <div class="card-body">
-                    <form id="addClientForm">
+                    <form id="addClientForm" autocomplete="off">
                         <div class="mb-3">
                             <label for="clientName" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="clientName" name="name" required placeholder="Ingrese el nombre del cliente">
@@ -31,7 +31,7 @@
                     <h4 class="mb-0">Nuevo Dispositivo</h4>
                 </div>
                 <div class="card-body">
-                    <form id="addDeviceForm">
+                    <form id="addDeviceForm" autocomplete="off">
 
                         <div class="mb-3">
                             <label for="deviceSelect" class="form-label">Tipo: </label>
@@ -79,7 +79,7 @@
                     <h4 class="mb-0">Nuevo Pago</h4>
                 </div>
                 <div class="card-body">
-                    <form id="addPaymentForm">
+                    <form id="addPaymentForm" autocomplete="off">
 
                         <div class="mb-3">
                             <label for="methodSelect" class="form-label">Metodo: </label>
@@ -96,29 +96,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="referenceInput" class="form-label">Referencia</label>
-                            <input type="text" class="form-control" id="referenceInput" name="reference" placeholder="Ingrese la referencia del banco">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="dolarsInput" class="form-label">Dolares</label>
-                            <input type="text" class="form-control" id="dolarsInput" name="amoutDolar" placeholder="Ingrese la cantidad en dolares">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="bolivarInput" class="form-label">Bolivares</label>
-                            <input type="text" class="form-control" id="referenceInput" name="amoutBolivar" placeholder="Ingrese la cantidad en bolivares">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="saintInvoiceInput" class="form-label">Pedido</label>
-                            <input type="text" class="form-control" id="saintInvoiceInput" name="saintInvoice" placeholder="Ingrese el pedido de referencia">
-                        </div>
-
-                        <div class="mb-3">
                             <label for="paymentReceptionSearch" class="form-label">Buscar Recepcion</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="paymentReceptionSearch" required placeholder="Nombre del cliente o pedido">
+                                <input type="text" class="form-control" id="paymentReceptionSearch" required placeholder="Estado o pedido" name="receptionId">
                                 <div id="searchReceptionsResults" class="list-group mt-5" style=" position: absolute; z-index: 1000; width: 100%;
                                 max-height: 300px; overflow-y: auto; display: none;">
                                 </div>
@@ -127,17 +107,18 @@
 
                             <script>
                                 searchBar({
-                                    listUrl: ['/api/receptions/like?saintOrder'],
-                                    input: 'searchReceptionsResults',
-                                    container: 'searchClientsResults',
+                                    listUrl: ['/api/receptions/like?saintOrder', '/api/receptions/like?status'],
+                                    input: 'paymentReceptionSearch',
+                                    container: 'searchReceptionsResults',
                                     configContent: (result, item) => {
-                                        item.textContent = `Cliente: ${result.name}`
-                                        item.dataset.clientId = result.id
+
+                                        item.textContent = `Pedido:${result.saintOrder} / ${result.status} / ${result.client.name || ""}`
+                                        // item.dataset.id = result.id
                                     },
                                     noContent: (resultContainer) => {
                                         const noResultsItem = document.createElement('span');
                                         noResultsItem.classList.add('list-group-item', 'disabled');
-                                        noResultsItem.textContent = 'No se encontraron clientes.';
+                                        noResultsItem.textContent = 'No se encontraron recepciones.';
                                         resultContainer.appendChild(noResultsItem);
                                         resultContainer.style.display = 'block';
                                     },
@@ -166,6 +147,28 @@
                             <!-- </div> -->
                         </div>
 
+                        <div class="mb-3">
+                            <label for="referenceInput" class="form-label">Referencia</label>
+                            <input type="text" class="form-control" id="referenceInput" name="reference" placeholder="Ingrese la referencia del banco">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dolarsInput" class="form-label">Dolares</label>
+                            <input type="text" class="form-control" id="dolarsInput" name="amoutDolar" placeholder="Ingrese la cantidad en dolares">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="bolivarInput" class="form-label">Bolivares</label>
+                            <input type="text" class="form-control" id="referenceInput" name="amoutBolivar" placeholder="Ingrese la cantidad en bolivares">
+                        </div>
+
+                        <!-- <div class="mb-3">
+                            <label for="saintInvoiceInput" class="form-label">Pedido</label>
+                            <input type="text" class="form-control" id="saintInvoiceInput" name="saintInvoice" placeholder="Ingrese el pedido de referencia">
+                        </div> -->
+
+
+
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button id="submitAddPayment" class="btn btn-primary">
                                 <i class="fas fa-paper-plane me-2"></i> Registrar
@@ -185,7 +188,7 @@
                     <h4 class="mb-0">Nueva Recepción</h4>
                 </div>
                 <div class="card-body">
-                    <form id="addReceptionForm">
+                    <form id="addReceptionForm" autocomplete="off">
                         <div class="row">
                             <!-- Columna izquierda -->
                             <div class="col-md-6">
@@ -249,7 +252,7 @@
                                             container: 'searchClientsResults',
                                             configContent: (result, item) => {
                                                 item.textContent = `Cliente: ${result.name}`
-                                                item.dataset.clientId = result.id
+                                                // item.dataset.id = result.id
                                             },
                                             noContent: (resultContainer) => {
                                                 const noResultsItem = document.createElement('span');
@@ -369,13 +372,42 @@
 
 <script>
     submitForm({
+        submitButtonId: 'submitAddPayment',
+        formId: 'addPaymentForm',
+        postUrl: '/api/payments',
+        onSuccess: (data, form) => {
+            if (data.success) {
+                form.reset();
+                // document.getElementById('ReceptionSaintOrder').focus()
+                alert('el pago se ha agregado exitosamente');
+            } else {
+                console.log(data)
+                alert(`No se ha realizado la operacion: ${data.message}`);
+            }
+        },
+        onError: (error) => {
+            console.log(error)
+            alert('No se ha podido encontrar al servidor');
+        },
+        processForm: (form) => {
+            const formData = new FormData(form);
+            const jsonForm = Object.fromEntries(formData.entries());
+            const receptionInput = document.getElementById('paymentReceptionSearch');
+            jsonForm.receptionId = Number(receptionInput.dataset.id);
+            receptionInput.dataset.id = undefined;
+            return jsonForm;
+        }
+    });
+
+
+    submitForm({
         submitButtonId: 'submitAddReception',
         formId: 'addReceptionForm',
         postUrl: '/api/receptions',
         onSuccess: (data, form) => {
             if (data.success) {
                 form.reset();
-                document.getElementById('deviceType').focus()
+                document.getElementById('ReceptionSaintOrder').focus()
                 alert('la recepcion se ha agregado exitosamente');
             } else {
                 console.log(data)
@@ -393,6 +425,8 @@
             const deviceInput = document.getElementById('receptionDeviceSearch');
             jsonForm.clientId = Number(clientInput.dataset.id);
             jsonForm.deviceId = Number(deviceInput.dataset.id);
+            deviceInput.dataset.id = undefined;
+            clientInput.dataset.id = undefined;
             return jsonForm;
         }
     });

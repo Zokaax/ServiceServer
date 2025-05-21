@@ -28,10 +28,12 @@ function searchBar({
     function displayResults(results) {
         resultContainer.innerHTML = '';
         if (results.data && results.data.length > 0) {
+
             results.data.forEach(result => {
                 const listItem = document.createElement('span');
                 listItem.classList.add('list-group-item', 'list-group-item-action');
-                listItem.dataset.id = result.id
+                listItem.dataset.id = result.id ///
+
                 configContent(result, listItem)
 
                 listItem.addEventListener('click', () => {

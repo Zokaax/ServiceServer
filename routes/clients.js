@@ -17,4 +17,4 @@ clientsRouter.patch('/:id', validateId, validateRequest('client'), clientControl
 
 clientsRouter.post('/', validateRequest('client'), clientController.addData);
 clientsRouter.get('/', validateId, validateQuery('client'), clientController.getAll);
-clientsRouter.get('/like', validateId, validateQuery('client'), clientController.getLike);
+clientsRouter.get('/like', validateId, validateQuery('client'), clientController.getAll);

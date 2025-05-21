@@ -10,27 +10,20 @@ export default class DeviceController {
         const query = (Object.keys(req.validateQuery).length > 0) ?
             req.validateQuery :
             null;
-
         try {
-            const devices = await deviceService.getDevices(query);
-            (devices.length > 0) ?
-            res.status(200).json({
-                success: true,
-                data: devices
-            }): next(new NotFoundError(`${req.method} ${req.originalUrl}.`));
-        } catch (error) {
-            next(new DatabaseError(`${req.method} ${req.originalUrl}.`));
-        }
-    }
 
-    static async getLike(req, res, next) { //GET devices + ?ids='1,2,34,5,623,' etc
-        const query = (Object.keys(req.validateQuery).length > 0) ?
-            req.validateQuery :
-            null;
-
-        try {
-            const devices = await deviceService.getDevices(query, true);
-            (devices.length > 0) ?
+            let devices;
+            if (req.path == '/') {
+                devices = await deviceService.getDevices({
+                    query
+                });
+            } else if (req.path == '/like') {
+                devices = await deviceService.getDevices({
+                    query,
+                    like: true
+                });
+            }
+            (devices && devices.length > 0) ?
             res.status(200).json({
                 success: true,
                 data: devices

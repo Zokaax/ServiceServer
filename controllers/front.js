@@ -23,10 +23,9 @@ export default class FrontController {
     }
 
     static async getDashboard(req, res, next) {
-
-
-        const recepciones = await receptionService.getFullReceptions();
-        // console.log(recepciones)
+        const recepciones = await receptionService.getReceptions({
+            full: true
+        });
         const content = await FrontController.renderPartial('panel', {
             recepciones
         });

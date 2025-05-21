@@ -10,10 +10,19 @@ export default class ClientController {
         const query = (req.validateQuery && (Object.keys(req.validateQuery).length > 0)) ?
             req.validateQuery :
             null;
-
         try {
-            const clients = await clientService.getClients(query);
-            (clients.length > 0) ?
+            let clients;
+            if (req.path == '/') {
+                clients = await clientService.getClients({
+                    query
+                });
+            } else if (req.path == '/like') {
+                clients = await clientService.getClients({
+                    query,
+                    like: true
+                });
+            }
+            (clients && clients.length > 0) ?
             res.status(200).json({
                 success: true,
                 data: clients
@@ -22,24 +31,6 @@ export default class ClientController {
             next(new DatabaseError(`${req.method} ${req.originalUrl}.`));
         }
     }
-
-    static async getLike(req, res, next) { //GET clients + ?ids='1,2,34,5,623,' etc
-        const query = (req.validateQuery && (Object.keys(req.validateQuery).length > 0)) ?
-            req.validateQuery :
-            null;
-
-        try {
-            const clients = await clientService.getClients(query, true);
-            (clients.length > 0) ?
-            res.status(200).json({
-                success: true,
-                data: clients
-            }): next(new NotFoundError(`${req.method} ${req.originalUrl}.`));
-        } catch (error) {
-            next(new DatabaseError(`${req.method} ${req.originalUrl}.`));
-        }
-    }
-
 
     static async addData(req, res, next) { //POST /clients
         try {
@@ -57,7 +48,6 @@ export default class ClientController {
     static async createOrUpdate(req, res, next) { // PUT /client/:id
         const id = req.validateId;
         const idIsReal = await clientService.exists(id)
-
         try {
             idIsReal
                 ?

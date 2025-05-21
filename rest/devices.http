@@ -3,7 +3,7 @@
 GET http://localhost:3000/api/devices
 
 ### recuperar informacion de varios dispositivos
-GET http://localhost:3000/api/devices?id=1,54,6,
+GET http://localhost:3000/api/devices/like?brand=sam
 
 ### CORREGIR FILTROS ZOD
 ### enviando informacion para agregar un dispositivo

@@ -12,7 +12,10 @@ class DeviceService extends BaseService(Device) {
         super();
     }
 
-    async getDevices(query = null, like = null) {
+    async getDevices({
+        query = null,
+        like = false
+    }) {
         const devicesRequest = query ?
             await super.getQuery(query, like) :
             await super.getAll();

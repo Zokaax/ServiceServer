@@ -19,7 +19,7 @@ export const BaseService = (Model) => {
             return items;
         }
 
-        async getQuery(query, like = null) {
+        async getQuery(query, like = false) {
             const items = await this.safeCall('getByQuery', query, like);
             return items;
         }

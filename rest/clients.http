@@ -3,7 +3,7 @@
 GET http://localhost:3000/api/clients
 
 ### recuperar informacion de clientes
-GET http://localhost:3000/api/clients?id=1,2,4,6,6
+GET http://localhost:3000/api/clients/like?id=1
 
 ### enviando informacion para agregar un client
 POST http://localhost:3000/api/clients
