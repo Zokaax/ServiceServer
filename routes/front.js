@@ -1,4 +1,6 @@
-import { Router} from 'express';
+import {
+    Router
+} from 'express';
 import FrontController from '../controllers/front.js';
 
 export const frontRouter = Router();

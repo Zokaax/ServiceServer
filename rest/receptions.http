@@ -50,4 +50,4 @@ Content-Type: application/json
 }
 
 ### eliminar informacion de una recepcion
-DELETE http://localhost:3000/api/receptions/1
+DELETE http://localhost:3000/api/receptions/18

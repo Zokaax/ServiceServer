@@ -45,8 +45,12 @@ export default class FrontController {
     }
 
     static async getReports(req, res) {
-        const content = await FrontController.renderPartial('reports');
-
+        const recepciones = await receptionService.getReceptions({
+            full: true
+        });
+        const content = await FrontController.renderPartial('reports', {
+            recepciones
+        });
         const mainData = {
             content,
         };

@@ -1,10 +1,29 @@
-import { ValidationError, InvalidQueryError} from '../errors/serviceError.js'
-import { validateClient, validatePartialClient } from './schemas/client.js';
-import { validateDevice, validatePartialDevice } from './schemas/device.js';
-import { validatePayment, validatePartialPayment } from './schemas/payment.js';
-import { validateReception, validatePartialReception } from './schemas/reception.js';
-import { validateRawId } from './schemas/id.js';
-import { validateRawQuerys } from './schemas/query.js';
+import {
+    ValidationError,
+    InvalidQueryError
+} from '../errors/serviceError.js'
+import {
+    validateClient,
+    validatePartialClient
+} from './schemas/client.js';
+import {
+    validateDevice,
+    validatePartialDevice
+} from './schemas/device.js';
+import {
+    validatePayment,
+    validatePartialPayment
+} from './schemas/payment.js';
+import {
+    validateReception,
+    validatePartialReception
+} from './schemas/reception.js';
+import {
+    validateRawId
+} from './schemas/id.js';
+import {
+    validateRawQuerys
+} from './schemas/query.js';
 
 const validationSchemas = {
     client: {
@@ -32,12 +51,12 @@ export const validateRequest = (resource) => {
 
         if (['put', 'post'].includes(method)) {
             validation = validationSchemas[resource].create(req.body);
-        } else if (method === 'patch')  {
+        } else if (method === 'patch') {
             validation = validationSchemas[resource].update(req.body);
-        }else {
+        } else {
             return next();
         }
-        if (!validation.success ) {
+        if (!validation.success) {
             return next(new ValidationError(`${validation.error.issues[0].message} en la ruta ${req.method} ${req.originalUrl}.`));
         }
         req.validateBody = validation.data;
@@ -51,7 +70,7 @@ export const validateQuery = (resource) => {
 
         let validation = validationSchemas[resource].update(query);
 
-        if (!validation.success ) {
+        if (!validation.success) {
             return next(new ValidationError(`${validation.error.issues[0].message} en la ruta ${req.method} ${req.originalUrl}.`));
         }
 
@@ -59,7 +78,7 @@ export const validateQuery = (resource) => {
             ...validation.data
         }
 
-        if (req.validateId){
+        if (req.validateId) {
             data.id = req.validateId;
         }
         req.validateQuery = data
@@ -67,20 +86,21 @@ export const validateQuery = (resource) => {
     };
 };
 
-export function validateId(req, res , next){
+export function validateId(req, res, next) {
 
-    let id = req.params.id
-    ? req.params.id
-    : req.query.id || null
+    let id = req.params.id ?
+        req.params.id :
+        req.query.id || null
 
-    // console.log(id)
-    const validation = validateRawId({id});
+    const validation = validateRawId({
+        id
+    });
     if (!validation.success) {
         return next(new InvalidQueryError(`${validation.error.issues[0].message} en la ruta ${req.method} ${req.originalUrl}.`));
     }
-    req.validateId = validation.data.id
-    ? validation.data.id.toString()
-    : undefined
+    req.validateId = validation.data.id ?
+        validation.data.id.toString() :
+        undefined
     next();
 
 }

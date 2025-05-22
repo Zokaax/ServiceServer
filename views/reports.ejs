@@ -1,13 +1,448 @@
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">Reportes</h3>
+<style>
+    .card {
+        border-radius: 0.75rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 0.5rem;
+    }
+
+    .btn {
+        border-radius: 0.5rem;
+    }
+
+    .recepcion-item-card {
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border-left: 5px solid;
+        /* Para el color del estado */
+    }
+
+    .recepcion-item-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    }
+
+    /* Colores de estado (similares a los de tu EJS) */
+    .status-EN-PROCESO {
+        border-color: #ced4da;
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+
+    /* light */
+    .status-COBRADO {
+        border-color: #28a745;
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    /* success */
+    .status-PENDIENTE {
+        border-color: #dc3545;
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* danger */
+    .status-DEVOLUCION {
+        border-color: #17a2b8;
+        background-color: #d1ecf1;
+        color: #0c5460;
+    }
+
+    /* info */
+    .status-PAGADO {
+        border-color: #ffc107;
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    /* warning */
+    .status-GARANTIA {
+        border-color: #6c757d;
+        background-color: #e2e6ea;
+        color: #343a40;
+    }
+
+    /* secondary */
+    .status-CRUCE {
+        border-color: #6f42c1;
+        background-color: #e6dff9;
+        color: #4b2a82;
+    }
+
+    /* purple-like */
+    .status-ELIMINADA {
+        border-color: #6c757d;
+        background-color: #e2e6ea;
+        color: #343a40;
+    }
+
+    /* secondary */
+    .status-OTRO {
+        border-color: #007bff;
+        background-color: #e7f3ff;
+        color: #004085;
+    }
+
+    /* primary */
+
+    .status-header {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 0;
+        background-color: #e9ecef;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        border-top-left-radius: calc(0.75rem - 1px);
+        border-top-right-radius: calc(0.75rem - 1px);
+    }
+
+    .status-group {
+        margin-bottom: 2rem;
+    }
+</style>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-gray-900">Reportes de Recepciones</h2>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Opciones de Filtro</h6>
+        </div>
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label for="startDate" class="form-label">Fecha de Inicio:</label>
+                    <input type="date" class="form-control" id="startDate">
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Reportes</li>
-                    </ol>
+                <div class="col-md-4">
+                    <label for="endDate" class="form-label">Fecha de Fin:</label>
+                    <input type="date" class="form-control" id="endDate">
+                </div>
+                <div class="col-md-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="filterByDateEnd" role="switch">
+                        <label class="form-check-label" for="filterByDateEnd">Filtrar por Fecha de Cierre</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary w-100" id="generateReportBtn">Generar Reporte</button>
                 </div>
             </div>
-            <!--end::Row-->
+        </div>
+    </div>
+
+    <div id="reportsOutput" class="mt-4">
+        <div class="text-center text-muted p-5">
+            <p>Selecciona un rango de fechas y haz clic en "Generar Reporte" para ver los resultados.</p>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="receptionDetailModal" tabindex="-1" aria-labelledby="receptionDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-3 shadow">
+            <div class="modal-header bg-primary text-white rounded-top-3">
+                <h5 class="modal-title" id="receptionDetailModalLabel">Detalles de Recepción</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editReceptionForm">
+                    <input type="hidden" id="modalReceptionId">
+                    <div class="mb-3">
+                        <label for="modalSaintOrder" class="form-label">Pedido SAINTO:</label>
+                        <input type="text" class="form-control" id="modalSaintOrder" readonly>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="modalDateStart" class="form-label">Fecha de Entrada:</label>
+                            <input type="date" class="form-control" id="modalDateStart">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="modalDateEnd" class="form-label">Fecha de Cierre:</label>
+                            <input type="date" class="form-control" id="modalDateEnd">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="modalClientId" class="form-label">ID Cliente:</label>
+                            <input type="text" class="form-control" id="modalClientId" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="modalDeviceId" class="form-label">ID Dispositivo:</label>
+                            <input type="text" class="form-control" id="modalDeviceId" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalClientIssue" class="form-label">Problema del Cliente:</label>
+                        <textarea class="form-control" id="modalClientIssue" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalWorkDone" class="form-label">Trabajo Realizado:</label>
+                        <textarea class="form-control" id="modalWorkDone" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalStatus" class="form-label">Estado:</label>
+                        <select class="form-select" id="modalStatus">
+                            <option value="EN PROCESO">EN PROCESO</option>
+                            <option value="PENDIENTE">PENDIENTE</option>
+                            <option value="COBRADO">COBRADO</option>
+                            <option value="PAGADO">PAGADO</option>
+                            <option value="GARANTIA">GARANTIA</option>
+                            <option value="CRUCE">CRUCE</option>
+                            <option value="ELIMINADA">ELIMINADA</option>
+                            <option value="OTRO">OTRO</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="saveReceptionChanges">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="recepciones-data" style="display:none;"><%- JSON.stringify(recepciones) %></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const recepciones = JSON.parse(document.getElementById('recepciones-data').textContent);
+        console.log(recepciones); // Tus datos están aquí
+
+
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const filterByDateEndSwitch = document.getElementById('filterByDateEnd');
+        const generateReportBtn = document.getElementById('generateReportBtn');
+        const reportsOutput = document.getElementById('reportsOutput');
+        const receptionDetailModal = new bootstrap.Modal(document.getElementById('receptionDetailModal'));
+        const modalReceptionId = document.getElementById('modalReceptionId');
+        const modalSaintOrder = document.getElementById('modalSaintOrder');
+        const modalDateStart = document.getElementById('modalDateStart');
+        const modalDateEnd = document.getElementById('modalDateEnd');
+        const modalClientId = document.getElementById('modalClientId');
+        const modalDeviceId = document.getElementById('modalDeviceId');
+        const modalClientIssue = document.getElementById('modalClientIssue');
+        const modalWorkDone = document.getElementById('modalWorkDone');
+        const modalStatus = document.getElementById('modalStatus');
+        const saveReceptionChangesBtn = document.getElementById('saveReceptionChanges');
+
+        // --- Datos de Recepciones (Simulados) ---
+
+
+        // Formatea una fecha a 'YYYY-MM-DD'
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Establece las fechas predeterminadas al mes actual
+        function setDefaultDates() {
+            const today = new Date();
+            const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+            startDateInput.value = formatDate(firstDayOfMonth);
+            endDateInput.value = formatDate(lastDayOfMonth);
+        }
+
+        // Obtiene la clase CSS para el color del estado
+        function getStatusClass(status) {
+            switch (status) {
+                case 'EN PROCESO':
+                    return 'status-EN-PROCESO';
+                case 'COBRADO':
+                    return 'status-COBRADO';
+                case 'PENDIENTE':
+                    return 'status-PENDIENTE';
+                case 'PAGADO':
+                    return 'status-PAGADO';
+                case 'DEVOLUCION':
+                    return 'status-DEVOLUCION';
+                case 'GARANTIA':
+                    return 'status-GARANTIA';
+                case 'CRUCE':
+                    return 'status-CRUCE';
+                case 'ELIMINADA':
+                    return 'status-ELIMINADA';
+                case 'OTRO':
+                    return 'status-OTRO';
+                default:
+                    return '';
+            }
+        }
+
+        // --- Lógica de Filtrado y Renderizado ---
+
+        function filterAndRenderReceptions() {
+            const start = startDateInput.value;
+            const end = endDateInput.value;
+            const filterByEnd = filterByDateEndSwitch.checked;
+
+            // Convertir fechas de string a objetos Date para comparación
+            const startDate = start ? new Date(start + 'T00:00:00') : null;
+            const endDate = end ? new Date(end + 'T23:59:59') : null; // Incluir todo el día final
+
+            const filteredReceptions = recepciones.filter(recepcion => {
+                const dateToCheckStr = filterByEnd ? recepcion.dateEnd : recepcion.dateStart;
+
+                // Si la fecha a chequear no existe (ej. dateEnd es null), no la incluimos si estamos filtrando por ella
+                if (!dateToCheckStr && filterByEnd) {
+                    return false;
+                }
+                if (!dateToCheckStr && !filterByEnd) { // dateStart no debería ser null en teoría, pero por si acaso
+                    return false;
+                }
+
+                const dateToCheck = new Date(dateToCheckStr + 'T00:00:00'); // Normalizar a inicio del día para comparación
+
+                let isInRange = true;
+                if (startDate && dateToCheck < startDate) {
+                    isInRange = false;
+                }
+                if (endDate && dateToCheck > endDate) {
+                    isInRange = false;
+                }
+                return isInRange;
+            });
+
+            // Agrupar recepciones filtradas por estado
+            const groupedReceptions = filteredReceptions.reduce((acc, recepcion) => {
+                const status = recepcion.status || 'OTRO'; // Si no tiene estado, agrupar como 'OTRO'
+                if (!acc[status]) {
+                    acc[status] = [];
+                }
+                acc[status].push(recepcion);
+                return acc;
+            }, {});
+
+            renderReceptions(groupedReceptions);
+        }
+
+        function renderReceptions(groupedReceptions) {
+            reportsOutput.innerHTML = ''; // Limpiar el contenido anterior
+
+            const sortedStatuses = Object.keys(groupedReceptions).sort(); // Ordenar estados alfabéticamente
+
+            if (sortedStatuses.length === 0) {
+                reportsOutput.innerHTML = `
+                        <div class="text-center text-muted p-5">
+                            <p>No se encontraron recepciones para el rango de fechas y filtros seleccionados.</p>
+                        </div>
+                    `;
+                return;
+            }
+
+            sortedStatuses.forEach(status => {
+                const statusGroupDiv = document.createElement('div');
+                statusGroupDiv.className = 'card mb-4 status-group';
+                statusGroupDiv.innerHTML = `
+                        <div class="status-header ${getStatusClass(status)}">
+                            <h5 class="mb-0 text-white">${status} (${groupedReceptions[status].length})</h5>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            </div>
+                    `;
+                const listGroup = statusGroupDiv.querySelector('.list-group');
+
+                groupedReceptions[status].forEach(recepcion => {
+                    const receptionItemHtml = `
+                            <button type="button" class="list-group-item list-group-item-action recepcion-item-card ${getStatusClass(recepcion.status)}" data-recepcion-id="${recepcion.id}">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Pedido: ${recepcion.saintOrder}</h6>
+                                    <small class="text-muted">ID: ${recepcion.id}</small>
+                                </div>
+                                <p class="mb-1">Cliente ID: ${recepcion.clientId} | Dispositivo ID: ${recepcion.deviceId}</p>
+                                <small>Inicio: ${recepcion.dateStart || 'N/A'} | Cierre: ${recepcion.dateEnd || 'N/A'}</small>
+                            </button>
+                        `;
+                    listGroup.insertAdjacentHTML('beforeend', receptionItemHtml);
+                });
+                reportsOutput.appendChild(statusGroupDiv);
+            });
+
+            // Añadir event listeners a los nuevos elementos clickeables
+            document.querySelectorAll('.recepcion-item-card').forEach(button => {
+                button.addEventListener('click', function() {
+                    const receptionId = parseInt(this.dataset.recepcionId);
+                    const selectedReception = recepciones.find(r => r.id === receptionId);
+                    if (selectedReception) {
+                        openReceptionModal(selectedReception);
+                    }
+                });
+            });
+        }
+
+        // --- Lógica del Modal ---
+
+        function openReceptionModal(reception) {
+            modalReceptionId.value = reception.id;
+            modalSaintOrder.value = reception.saintOrder;
+            modalDateStart.value = reception.dateStart;
+            modalDateEnd.value = reception.dateEnd;
+            modalClientId.value = reception.clientId;
+            modalDeviceId.value = reception.deviceId;
+            modalClientIssue.value = reception.clientIssue;
+            modalWorkDone.value = reception.workDone;
+            modalStatus.value = reception.status;
+
+            receptionDetailModal.show();
+        }
+
+        saveReceptionChangesBtn.addEventListener('click', function() {
+            const id = parseInt(modalReceptionId.value);
+            const updatedReception = {
+                id: id,
+                saintOrder: modalSaintOrder.value,
+                dateStart: modalDateStart.value,
+                dateEnd: modalDateEnd.value,
+                clientId: parseInt(modalClientId.value),
+                deviceId: parseInt(modalDeviceId.value),
+                clientIssue: modalClientIssue.value,
+                workDone: modalWorkDone.value,
+                status: modalStatus.value
+            };
+
+            // En una aplicación real, aquí enviarías los datos al servidor
+            // fetch('/api/receptions/' + id, {
+            //     method: 'PUT',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(updatedReception)
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log('Recepción actualizada:', data);
+            //     // Actualizar el array local de recepciones
+            //     const index = receptions.findIndex(r => r.id === id);
+            //     if (index !== -1) {
+            //         receptions[index] = updatedReception;
+            //     }
+            //     filterAndRenderReceptions(); // Volver a renderizar con los datos actualizados
+            //     receptionDetailModal.hide();
+            // })
+            // .catch(error => console.error('Error al actualizar:', error));
+
+            // Simulación de actualización local
+            const index = recepciones.findIndex(r => r.id === id);
+            if (index !== -1) {
+                recepciones[index] = updatedReception;
+                console.log('Recepción actualizada localmente:', updatedReception);
+            }
+            filterAndRenderReceptions(); // Volver a renderizar con los datos actualizados
+            receptionDetailModal.hide();
+        });
+
+        // --- Inicialización y Event Listeners ---
+        setDefaultDates(); // Establecer fechas por defecto al cargar
+
+        generateReportBtn.addEventListener('click', filterAndRenderReceptions);
+
+        // Generar el reporte inicial al cargar la página
+        filterAndRenderReceptions();
+    });
+</script>

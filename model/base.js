@@ -19,7 +19,6 @@ export const BaseModel = (tableName) => {
         }
 
         static async getByQuery(querys, like) {
-            console.log(like)
             let queryBuilder = this.db(this.tableName).select('*');
 
             for (const fieldName in querys) {
