@@ -10,14 +10,17 @@ const paymentSchema = zod.object({
         message: 'Ha ocurrido un error con el valor de la referencia.'
     }),
     amoutBolivar: zod.coerce.number({
-        invalid_type_error: 'La cantidad de bolivares debe ser un numnero',
+        invalid_type_error: 'La cantidad en bolivares debe ser un numnero',
         message: 'Ha ocurrido un error con valor en bolivares.'
-    }).positive(),
+    }).nonnegative(),
     amoutDolar: zod.coerce.number({
-        invalid_type_error: 'La cantidad de dolares debe ser un numnero',
+        invalid_type_error: 'La cantidad en dolares debe ser un numnero',
         message: 'Ha ocurrido un error con valor en dolares.'
-    }).positive(),
-    // saintInvoice: zod.number().optional(),
+    }).nonnegative(),
+    saintInvoice: zod.coerce.number({
+        invalid_type_error: 'La cantidad en dolares debe ser un numnero',
+        message: 'Ha ocurrido un error con valor en dolares.'
+    }).nonnegative().optional(),
     receptionId: zod.coerce.number({
         invalid_type_error: 'El id de la recepcion debe ser un numero entero',
         message: 'Ha ocurrido un error con valor de receptionId.'

@@ -23,12 +23,10 @@ export default class FrontController {
     }
 
     static async getDashboard(req, res, next) {
-        const recepciones = await receptionService.getReceptions({
-            full: true
-        });
-        const content = await FrontController.renderPartial('panel', {
-            recepciones
-        });
+        // const recepciones = await receptionService.getReceptions({
+        //     full: true
+        // });
+        const content = await FrontController.renderPartial('panel');
         const mainData = {
             content
         };
@@ -45,12 +43,11 @@ export default class FrontController {
     }
 
     static async getReports(req, res) {
-        const recepciones = await receptionService.getReceptions({
-            full: true
-        });
-        const content = await FrontController.renderPartial('reports', {
-            recepciones
-        });
+        // const recepciones = await receptionService.getReceptions({
+        //     full: true
+        // });
+
+        const content = await FrontController.renderPartial('reports');
         const mainData = {
             content,
         };

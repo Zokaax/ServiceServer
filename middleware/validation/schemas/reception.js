@@ -21,7 +21,13 @@ const receptionSchema = zod.object({
     status: zod.string({
         invalid_type_error: 'El estado de la recepcion debe ser un string',
         required_error: 'El estado de la recepcion es requerido.'
-    })
+    }),
+    amoutDolar: zod.coerce.number({
+        invalid_type_error: 'La cantidad en dolares debe ser un numnero',
+        message: 'Ha ocurrido un error con valor en dolares.'
+    }).nonnegative().optional(),
+    dateField: zod.string().max(10).optional(),
+    deviceDelivered: zod.boolean().optional()
 })
 
 export function validateReception(input) {

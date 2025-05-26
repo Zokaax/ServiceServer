@@ -29,6 +29,18 @@ class ReceptionService extends BaseService(Reception) {
             receptionsRequest
     }
 
+    async getReceptionsByRange({
+        field,
+        start,
+        end,
+        full = true
+    }) {
+        const receptionsRequest = await super.getRange(field, start, end);
+        return full ?
+            this.getFullReference(receptionsRequest) :
+            receptionsRequest;
+    }
+
     async getReceptionById(id) {
         const reception = await super.getById(id);
         return reception;

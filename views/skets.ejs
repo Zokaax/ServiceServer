@@ -176,3 +176,71 @@
     <label for="deviceBrand" class="form-label">Marca</label>
     <input type="text" class="form-control" id="deviceBrand" name="brand" placeholder="Ingrese la marca del equipo">
 </div>
+
+
+
+
+
+
+
+
+
+<% if (recepciones && recepciones.length > 0) { 
+    recepciones.forEach(recepcion => { %>
+
+<% let background = 'bg-gradient-primary';
+              let text = 'text-gray-900 text-lg' %>
+
+<%
+       switch (recepcion.status) {
+           case 'EN PROCESO':
+           background = 'bg-gradient-light';
+           break;
+           case 'COBRADO':
+           background = 'bg-gradient-success';
+           break;
+           case 'PENDIENTE':
+           background = 'bg-gradient-danger';
+           break;
+           case 'DEVOLUCION':
+           background = 'bg-gradient-info';
+           break;
+           case 'PAGADO':
+           background = 'bg-gradient-warning';
+           break;
+           case 'OTRO':
+           background = 'bg-gradient-warning';
+           break;
+           default:
+       }
+       %>
+
+<a href="#" style="text-decoration: none;">
+    <div class="row recepcion-item mb-0 border p-3 clickable-row <%= background %> <%= text %>" data-recepcion-id="<%- recepcion.id %>" data-estado="<%- recepcion.status %>">
+
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <%- recepcion.status || '' %>
+        </div>
+
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <%- recepcion.saintOrder %>
+        </div>
+
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <%- recepcion.dateStart || '' %>
+        </div>
+
+        <div class="col-12 col-md-3">
+            <%= (recepcion.client) ? recepcion.client.name : '' %>
+        </div>
+    </div>
+</a>
+
+<% }); 
+  } else { %>
+<div class="row">
+    <div class="col">
+        <p>No hay recepciones disponibles.</p>
+    </div>
+</div>
+<% } %>

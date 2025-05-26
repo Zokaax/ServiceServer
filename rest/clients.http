@@ -25,11 +25,11 @@ Content-Type: application/json
 }
 
 ### enviando informacion para actualizar parte de un client
-PATCH http://localhost:3000/api/clients/3
+PATCH http://localhost:3000/api/clients/1
 Content-Type: application/json
 
 {
-    "phone":"qwer"
+    "name":"Carlos Lara"
 }
 
 ### eliminar informacion de un cliente

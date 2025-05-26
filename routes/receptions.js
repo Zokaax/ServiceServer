@@ -14,6 +14,7 @@ receptionsRouter.post('/', validateRequest('reception'), receptionController.add
 receptionsRouter.get('/', validateId, validateQuery('reception'), receptionController.getAll);
 receptionsRouter.get('/full', validateId, validateQuery('reception'), receptionController.getAll);
 receptionsRouter.get('/like', validateId, validateQuery('reception'), receptionController.getAll);
+receptionsRouter.get('/date', validateId, validateQuery('reception'), receptionController.getAll);
 
 receptionsRouter.delete('/:id', validateId, receptionController.deleteData);
 

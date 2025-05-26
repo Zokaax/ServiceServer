@@ -24,6 +24,15 @@ export const BaseService = (Model) => {
             return items;
         }
 
+        async getRange(field, start, end) {
+            const items = await this.safeCall('getByRange', {
+                field,
+                start,
+                end
+            });
+            return items;
+        }
+
         async create(data) { //retorna el id creado
             const idCreated = await this.safeCall('create', data);
             return idCreated;

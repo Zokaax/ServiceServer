@@ -28,7 +28,21 @@ export default class ReceptionController {
                     full: true,
                     like: true
                 });
+            } else if (req.path == '/date') {
+                if (query) {
+                    const {
+                        dateField,
+                        dateStart,
+                        dateEnd
+                    } = query
+                    receptions = await receptionService.getReceptionsByRange({
+                        field: dateField,
+                        start: dateStart,
+                        end: dateEnd
+                    });
+                }
             }
+
             (receptions && receptions.length > 0) ?
             res.status(200).json({
                 success: true,

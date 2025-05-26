@@ -51,10 +51,10 @@ async function createPaymentTable() {
             table.increments('id').primary();
             table.string('method');
             table.string('reference');
-            table.string('amoutDolar');
-            table.string('amoutBolivar');
+            table.decimal('amoutDolar', 5, 2);
+            table.decimal('amoutBolivar', 8, 2);
 
-            // table.string('saintInvoice');
+            table.integer('saintInvoice');
             table.integer('receptionId');
 
             table.foreign('receptionId').references('id').inTable('receptions').onDelete('SET NULL');
@@ -75,6 +75,7 @@ async function createReceptionTable() {
         await database.schema.createTable('receptions', (table) => {
             table.increments('id').primary();
             table.string('saintOrder');
+            table.decimal('amoutDolar', 5, 2);
 
             table.date('dateStart');
             table.date('dateEnd');
@@ -84,6 +85,7 @@ async function createReceptionTable() {
 
             table.text('clientIssue');
             table.text('workDone');
+            table.boolean('deviceDelivered').defaultTo(false);
 
             table.string('status').defaultTo('EN PROCESO'); //EN PROCESO, PENDIENTE, COBRADO, PAGADO, GARANTIA, CRUCE, ELIMINADA, OTRO
 

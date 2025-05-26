@@ -45,6 +45,31 @@ export const BaseModel = (tableName) => {
             return elements;
         }
 
+        // static async getByDateRange({field, start, end, additionalConditions = {} }) {
+        static async getByRange({
+            field,
+            start,
+            end
+        }) {
+            let queryBuilder = this.db(this.tableName).select('*');
+
+            if (start) {
+                queryBuilder = queryBuilder.where(field, '>=', start);
+            }
+            if (end) {
+                queryBuilder = queryBuilder.where(field, '<=', end);
+            }
+
+            // Add any additional conditions
+            // for (const [field, value] of Object.entries(additionalConditions)) {
+            //     if (value !== undefined && value !== null) {
+            //         queryBuilder = queryBuilder.where(field, value);
+            //     }
+            // }
+
+            return await queryBuilder;
+        }
+
         static async create(data) {
             return this.db(tableName).insert(data);
         }
