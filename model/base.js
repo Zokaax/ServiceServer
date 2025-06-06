@@ -1,25 +1,29 @@
-import {
-    database
-} from '../config/databaseCon.js';
+// import {
+//     database
+// } from '../config/databaseCon.js';
 // modelo base para utilizar base de datos knex
+
+import {
+    createConnection
+} from '../config/supabase.js'
 
 export const BaseModel = (tableName) => {
 
     return class {
 
-        static db = database;
+        static db = createConnection();
         static tableName = tableName;
 
         static async getAll() {
-            return await this.db(tableName).select('*');
+            return await this.db.from(this.tableName).select('*');
         }
 
         static async getById(id) {
-            return this.db(tableName).where('id', id).first();
+            return this.db.from(this.tableName).where('id', id).first();
         }
 
         static async getByQuery(querys, like) {
-            let queryBuilder = this.db(this.tableName).select('*');
+            let queryBuilder = this.db.from(this.tableName).select('*');
 
             for (const fieldName in querys) {
                 if (Object.hasOwnProperty.call(querys, fieldName)) {
@@ -51,7 +55,7 @@ export const BaseModel = (tableName) => {
             start,
             end
         }) {
-            let queryBuilder = this.db(this.tableName).select('*');
+            let queryBuilder = this.db.from(this.tableName).select('*');
 
             if (start) {
                 queryBuilder = queryBuilder.where(field, '>=', start);
@@ -71,22 +75,22 @@ export const BaseModel = (tableName) => {
         }
 
         static async create(data) {
-            return this.db(tableName).insert(data);
+            return this.db.from(tableName).insert(data);
         }
 
         static async update({
             id,
             data
         }) {
-            return this.db(tableName).where('id', id).update(data);
+            return this.db.from(tableName).where('id', id).update(data);
         }
 
         static async delete(id) {
-            return this.db(tableName).where('id', id).del();
+            return this.db.from(tableName).where('id', id).del();
         }
 
         static async exists(id) {
-            const result = await this.db(this.tableName)
+            const result = await this.db.from(this.tableName)
                 .where('id', id)
                 .count('* as count')
                 .first();
