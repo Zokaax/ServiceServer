@@ -1,17 +1,13 @@
 // import {
-//     database
+// database
 // } from '../config/databaseCon.js';
 // modelo base para utilizar base de datos knex
-
-import {
-    createConnection
-} from '../config/supabase.js'
 
 export const BaseModel = (tableName) => {
 
     return class {
 
-        static db = createConnection();
+        static db = database
         static tableName = tableName;
 
         static async getAll() {

@@ -3,7 +3,7 @@ import {
 } from './base.js';
 import {
     BaseModel
-} from '../model/base.js';
+} from '../model/supamodel.js';
 import deviceService from './device.js';
 import clientService from './client.js';
 import paymentService from './payment.js';

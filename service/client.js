@@ -3,7 +3,7 @@ import {
 } from './base.js';
 import {
     BaseModel
-} from '../model/base.js';
+} from '../model/supamodel.js';
 
 const Client = BaseModel('clients');
 
