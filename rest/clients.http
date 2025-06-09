@@ -3,7 +3,7 @@
 GET http://localhost:3000/api/clients
 
 ### recuperar informacion de clientes
-GET http://localhost:3000/api/clients/like?id=1
+GET http://localhost:3000/api/clients/like?name=cor
 
 ### enviando informacion para agregar un client
 POST http://localhost:3000/api/clients
@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ### enviando informacion para actualizar o agregar un client
-PUT http://localhost:3000/api/clients/1
+PUT http://localhost:3000/api/clients/23
 Content-Type: application/json
 
 {
@@ -25,11 +25,11 @@ Content-Type: application/json
 }
 
 ### enviando informacion para actualizar parte de un client
-PATCH http://localhost:3000/api/clients/1
+PATCH http://localhost:3000/api/clients/24
 Content-Type: application/json
 
 {
-    "name":"Carlos Lara"
+    "name":"Carlos LarTropa"
 }
 
 ### eliminar informacion de un cliente

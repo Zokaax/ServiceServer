@@ -26,7 +26,7 @@ export default class FrontController {
         // const recepciones = await receptionService.getReceptions({
         //     full: true
         // });
-        const content = await FrontController.renderPartial('panel');
+        const content = await FrontController.renderPartial('panel/panel');
         const mainData = {
             content
         };
@@ -34,7 +34,7 @@ export default class FrontController {
     }
 
     static async getReceptions(req, res) {
-        const content = await FrontController.renderPartial('receptions');
+        const content = await FrontController.renderPartial('reception/receptions');
 
         const mainData = {
             content,
@@ -47,7 +47,7 @@ export default class FrontController {
         //     full: true
         // });
 
-        const content = await FrontController.renderPartial('reports');
+        const content = await FrontController.renderPartial('report/reports');
         const mainData = {
             content,
         };
@@ -55,7 +55,7 @@ export default class FrontController {
     }
 
     static async getBios(req, res) {
-        const content = await FrontController.renderPartial('bios');
+        const content = await FrontController.renderPartial('bios/bios');
 
         const mainData = {
             content,
@@ -64,7 +64,7 @@ export default class FrontController {
     }
 
     static async getIncidents(req, res) {
-        const content = await FrontController.renderPartial('incidents');
+        const content = await FrontController.renderPartial('incident/incidents');
 
         const mainData = {
             content,

@@ -99,7 +99,8 @@ export function validateId(req, res, next) {
         return next(new InvalidQueryError(`${validation.error.issues[0].message} en la ruta ${req.method} ${req.originalUrl}.`));
     }
     req.validateId = validation.data.id ?
-        validation.data.id.toString() :
+        (Array.isArray(validation.data.id) && validation.data.id.length === 1 ?
+            validation.data.id[0] : validation.data.id.toString()) :
         undefined
     next();
 

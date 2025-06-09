@@ -17,13 +17,14 @@ Content-Type: application/json
 
 {
     "saintOrder":"123123",
+    "saintInvoice":"123123",
     "dateStart":"2023-10-27",
     "dateEnd":"2023-10-27",
-    "clientId":12,
-    "deviceId":5,
-    "clientIssue":"el señor de la fabrica",
-    "workDone":"el señor de la fabrica",
-    "status": "0412-98512563"
+    "clientId":24,
+    "deviceId":2,
+    "description":"el señor de la fabrica",
+    "solution":"el señor de la fabrica",
+    "status": "EN PROCESO"
 }
 
 ### enviando informacion para actualizar o agregar una recepcion

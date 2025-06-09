@@ -40,6 +40,7 @@ export const BaseModel = (tableName) => {
                 .select('*');
 
             for (const fieldName in querys) {
+
                 if (Object.hasOwnProperty.call(querys, fieldName)) {
                     let value = querys[fieldName];
 
@@ -57,11 +58,11 @@ export const BaseModel = (tableName) => {
                 }
             }
 
-
             const {
                 data,
                 error
             } = await query;
+
             if (error) throw error;
             return data || [];
         }
@@ -90,29 +91,32 @@ export const BaseModel = (tableName) => {
             return data;
         }
 
-        static async create(data) {
+        static async create(item) {
             const {
                 data: result,
                 error
             } = await supabase
                 .from(this.tableName)
-                .insert(data)
+                .insert(item)
                 .select();
+
+            console.log(result)
 
             if (error) throw error;
             return result ? result : [0] || null;
+
         }
 
         static async update({
             id,
-            data
+            item
         }) {
             const {
                 data: result,
                 error
             } = await supabase
                 .from(this.tableName)
-                .update(data)
+                .update(item)
                 .eq('id', id)
                 .select();
 
@@ -139,14 +143,11 @@ export const BaseModel = (tableName) => {
                 error
             } = await supabase
                 .from(this.tableName)
-                .select('id', {
-                    count: 'exact',
-                    head: true
-                })
-                .eq('id', id);
+                .select('id')
+                .eq('id', id)
+                .single()
 
-            if (error) throw error;
-            return data && data.length > 0;
+            return data !== null;
         }
     };
 };

@@ -2,6 +2,7 @@ import zod from 'zod'
 
 const receptionSchema = zod.object({
     saintOrder: zod.string(),
+    saintInvoice: zod.string(),
     dateStart: zod.string().date(),
     dateEnd: zod.string().date().optional(),
     clientId: zod.number({
@@ -16,8 +17,8 @@ const receptionSchema = zod.object({
     }).positive({
         invalid_type_error: 'El id del cliente debe ser un numero positivo'
     }),
-    clientIssue: zod.string(),
-    workDone: zod.string(),
+    description: zod.string(),
+    solution: zod.string(),
     status: zod.string({
         invalid_type_error: 'El estado de la recepcion debe ser un string',
         required_error: 'El estado de la recepcion es requerido.'

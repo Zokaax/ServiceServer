@@ -44,7 +44,7 @@ export const BaseService = (Model) => {
         }) { //retorna la cantidad de filas afectadas
             const rowsAffected = await this.safeCall('update', {
                 id,
-                data
+                item: data
             });
             return rowsAffected;
         }
