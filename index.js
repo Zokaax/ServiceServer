@@ -44,6 +44,7 @@ import {
     errorHandler
 } from './middleware/errors/errorHandler.js'
 
+
 // Configuración básica
 const __filename = fileURLToPath(
     import.meta.url);

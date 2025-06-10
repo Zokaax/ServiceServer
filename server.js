@@ -40,6 +40,15 @@ import {
     errorHandler
 } from './middleware/errors/errorHandler.js'
 
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV !== 'production') {
+    // Cargar variables de entorno
+    dotenv.config();
+}
+
+
+
 
 const app = express();
 
@@ -71,14 +80,13 @@ app.use(express.static(join(__dirname, 'public')));
 
 
 app.use((req, res, next) => {
-    if (req.headers.access && req.headers.access == process.env.API_ACCES) {
+    if (req.headers.access && req.headers.access == process.env.API_ACCESS) {
         next()
     } else {
         res.status(401).json({
             success: false,
             msg: 'Not Autorized',
         })
-        console.log(12312)
     }
 });
 
