@@ -67,6 +67,17 @@ expressApp.use(express.urlencoded({
 }));
 expressApp.use(express.static(join(__dirname, 'public')));
 
+expressApp.use((req, res, next) => {
+    if (req.headers.access && req.headers.access == process.env.API_ACCES) {
+        next()
+    } else {
+        res.status(401).json({
+            success: false,
+            msg: 'Not Autorized',
+        })
+    }
+});
+
 // Variables globales
 let mainWindow;
 let expressServer;
@@ -88,7 +99,9 @@ function createWindow() {
 
         // Cargar la aplicación
         if (process.env.NODE_ENV !== 'production') {
-            mainWindow.loadURL('http://localhost:3000/');
+            mainWindow.loadURL('http://localhost:3000/', {
+                extraHeaders: `access: ${process.env.API_ACCES}`
+            });
             mainWindow.webContents.openDevTools();
 
             // Cargar variables de entorno
@@ -119,7 +132,6 @@ function startExpressServer() {
 
     // Front
     expressApp.use('/', frontRouter);
-
 
     // errores
     expressApp.use(errorHandler);

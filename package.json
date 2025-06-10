@@ -4,6 +4,7 @@
     "devDependencies": {},
     "scripts": {
         "dev": "electron .",
+        "server": "node --watch server.js",
         "browser": "browser-sync start --proxy 'http://localhost:3000' --files '**/*.html, **/*.ejs, **/*.css, **/*.js'"
     },
     "dependencies": {

@@ -7,7 +7,8 @@ GET http://localhost:3000/api/payments?method=BINANCE
 
 ### enviando informacion para agregar un pago
 POST http://localhost:3000/api/payments
-Content-Type: application/json
+Content-Type: application/json,
+access: asdpfijaogifj243i5j3245908230j2poifj08u243jskdjfwjj3ij2pkmfsdf
 
 {
     "method": "callapa",

@@ -8,6 +8,7 @@ GET http://localhost:3000/api/clients/like?name=cor
 ### enviando informacion para agregar un client
 POST http://localhost:3000/api/clients
 Content-Type: application/json
+access: asdpfijaogifj243i5j3245908230j2poifj08u243jskdjfwjj3ij2pkmfsdf
 
 {
     "name": "corlos",
