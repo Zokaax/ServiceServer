@@ -96,7 +96,7 @@ export default class ReceptionController {
         }
     }
 
-    static async updateData(req, res, next) { // PATCH /reception/:id
+    static async updateData(req, res, next) { // PATCH /receptions/:id
         const {
             id
         } = req.params;
